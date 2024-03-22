@@ -10,7 +10,8 @@ pip install milvus-model
 ```
 This command installs milvus-model directly. If you're working within the PyMilvus ecosystem and want to include milvus-model as an optional component, you can install it using:
 ```bash
-pip install pymilvus[model]
+pip install pymilvus[model] 
+# or pip install "pymilvus[model]" for zsh.
 ```
 To upgrade milvus-model to the latest version, use:
 ```

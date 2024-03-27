@@ -1,11 +1,18 @@
 from typing import List, Optional
 
-import voyageai
 from pymilvus.model.base import BaseRerankerFunction, RerankResult
+
+try:
+    import voyageai
+except ImportError:
+    voyageai = None
 
 
 class VoyageRerankerFunction(BaseRerankerFunction):
     def __init__(self, model_name: str = "rerank-lite-1", api_key: Optional[str] = None):
+        if voyageai is None:
+            error_message = "voyageai is not installed."
+            raise ImportError(error_message)
         self.model_name = model_name
         self.client = voyageai.Client(api_key=api_key)
 

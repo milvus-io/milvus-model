@@ -1,10 +1,10 @@
 from typing import Any, List
 
-from pymilvus.model.base import BaseEmbeddingFunction, RerankResult
+from pymilvus.model.base import BaseRerankerFunction, RerankResult
 from sentence_transformers.cross_encoder import CrossEncoder
 
 
-class CrossEncoderRerankerFunction(BaseEmbeddingFunction):
+class CrossEncoderRerankerFunction(BaseRerankerFunction):
     def __init__(
         self,
         model_name: str = "",

@@ -1,5 +1,4 @@
 import logging
-from collections import defaultdict
 from typing import Dict, List
 
 from scipy.sparse import csr_array, vstack
@@ -58,20 +57,17 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
         self._encode_config = _encode_config
 
         self.model = BGEM3FlagModel(**self._model_config)
-        meta_info = defaultdict(dict)
-        meta_info["BAAI/bge-m3"]["dim"] = {
-            "dense": 1024,
-            "sparse": len(self.model.tokenizer),
-            "colbert_vecs": 1024,
-        }
-        self._meta_info = meta_info
 
     def __call__(self, texts: List[str]) -> Dict:
         return self._encode(texts)
 
     @property
     def dim(self) -> Dict:
-        return self._meta_info[self.model_name]["dim"]
+        return {
+            "dense": self.model.model.model.config.hidden_size,
+            "colbert_vecs": self.model.model.colbert_linear.out_features,
+            "sparse": len(self.model.tokenizer),
+        }
 
     def _encode(self, texts: List[str]) -> Dict:
         output = self.model.encode(sentences=texts, **self._encode_config)

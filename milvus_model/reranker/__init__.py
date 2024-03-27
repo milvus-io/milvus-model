@@ -1,7 +1,7 @@
 from .cohere import CohereRerankerFunction
 from .cross_encoder import CrossEncoderRerankerFunction
 from .flagreranker import FlagRerankerFunction
-from .voyage import VoyageRerankerFunction
+from .voyageai import VoyageRerankerFunction
 
 __all__ = [
     "CohereRerankerFunction",

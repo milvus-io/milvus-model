@@ -1,7 +1,11 @@
 from typing import Any, List
 
 from pymilvus.model.base import BaseRerankerFunction, RerankResult
-from sentence_transformers.cross_encoder import CrossEncoder
+
+try:
+    import sentence_transformers
+except ImportError:
+    sentence_transformers = None
 
 
 class CrossEncoderRerankerFunction(BaseRerankerFunction):
@@ -13,11 +17,14 @@ class CrossEncoderRerankerFunction(BaseRerankerFunction):
         activation_fct: Any = None,
         **kwargs,
     ):
+        if sentence_transformers is None:
+            error_message = "sentence_transformer is not installed."
+            raise ImportError(error_message)
         self.model_name = model_name
         self.device = device
         self.batch_size = batch_size
         self.activation_fct = activation_fct
-        self.model = CrossEncoder(
+        self.model = sentence_transformers.cross_encoder.CrossEncoder(
             model_name=model_name, device=self.device, default_activation_function=activation_fct
         )
 

@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pymilvus.model.base import BaseRerankerFunction, RerankResult
+from milvus_model.base import BaseRerankerFunction, RerankResult
 
 try:
     import cohere

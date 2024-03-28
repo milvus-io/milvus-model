@@ -1,7 +1,8 @@
 from typing import List, Optional, Union
 
 import torch
-from pymilvus.model.base import BaseRerankerFunction, RerankResult
+
+from milvus_model.base import BaseRerankerFunction, RerankResult
 
 try:
     from FlagEmbedding import FlagReranker

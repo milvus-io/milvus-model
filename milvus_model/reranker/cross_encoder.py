@@ -1,6 +1,6 @@
 from typing import Any, List
 
-from pymilvus.model.base import BaseRerankerFunction, RerankResult
+from milvus_model.base import BaseRerankerFunction, RerankResult
 
 try:
     import sentence_transformers

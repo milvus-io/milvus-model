@@ -3,7 +3,6 @@ from typing import List
 
 
 class BaseEmbeddingFunction:
-    model_name: str
 
     @abstractmethod
     def __call__(self, texts: List[str]):
@@ -15,6 +14,7 @@ class BaseEmbeddingFunction:
 
 
 class BaseRerankerFunction:
+    @abstractmethod
     def __call__(self, query: str, documents: List[str], top_k: int):
         """ """
 

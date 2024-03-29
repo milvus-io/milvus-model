@@ -9,7 +9,6 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "milvus-model"
-version = "0.2.0"  # Update with your current version
 authors = [
   {name = "Milvus Team", email = "milvus-team@zilliz.com"},
 ]
@@ -36,6 +35,8 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: Apache Software License",
 ]
+
+dynamic = ["version"]
 
 [project.urls]
 repository = "https://github.com/milvus-io/milvus-model"  # Update the repository URL

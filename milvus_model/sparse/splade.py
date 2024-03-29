@@ -131,7 +131,8 @@ class _SpladeImplementation:
             padding=True,
         )
         encoded_input = {key: val.to(self.device) for key, val in encoded_input.items()}
-        output = self.model(**encoded_input)
+        with torch.no_grad():
+            output = self.model(**encoded_input)
         return output.logits
 
     def _batchify(self, texts: List[str], batch_size: int) -> List[List[str]]:

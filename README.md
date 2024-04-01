@@ -23,7 +23,7 @@ pip install pymilvus[model] --upgrade
 ```
 If you need to install a specific version of milvus-model, specify the version number:
 ```bash
-pip install milvus-model==0.1.0
+pip install milvus-model==0.2.0
 ```
 This command installs version 0.1.0 of milvus-model.
 

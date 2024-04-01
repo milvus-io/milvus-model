@@ -25,7 +25,7 @@ If you need to install a specific version of milvus-model, specify the version n
 ```bash
 pip install milvus-model==0.2.0
 ```
-This command installs version 0.1.0 of milvus-model.
+This command installs version 0.2.0 of milvus-model.
 
 
 

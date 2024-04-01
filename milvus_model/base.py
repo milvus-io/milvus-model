@@ -13,7 +13,7 @@ class BaseEmbeddingFunction:
         """ """
 
 
-class BaseRerankerFunction:
+class BaseRerankFunction:
     @abstractmethod
     def __call__(self, query: str, documents: List[str], top_k: int):
         """ """

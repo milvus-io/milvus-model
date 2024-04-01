@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from milvus_model.base import BaseRerankerFunction, RerankResult
+from milvus_model.base import BaseRerankFunction, RerankResult
 
 try:
     import cohere
@@ -8,7 +8,7 @@ except ImportError:
     cohere = None
 
 
-class CohereRerankerFunction(BaseRerankerFunction):
+class CohereRerankFunction(BaseRerankFunction):
     def __init__(self, model_name: str = "rerank-english-v2.0", api_key: Optional[str] = None):
         if cohere is None:
             error_message = "cohere is not installed."

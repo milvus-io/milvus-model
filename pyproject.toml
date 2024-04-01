@@ -20,7 +20,7 @@ dependencies = [
     "sentence-transformers",
     "FlagEmbedding >= 1.2.2",
     "nltk",
-    "transformers >= 4.33.0",
+    "transformers >= 4.36.0",
     "jieba",
     "konlpy",
     "mecab-python3",

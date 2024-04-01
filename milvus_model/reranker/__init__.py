@@ -1,11 +1,11 @@
-from .cohere import CohereRerankerFunction
-from .cross_encoder import CrossEncoderRerankerFunction
-from .flagreranker import FlagRerankerFunction
-from .voyageai import VoyageRerankerFunction
+from .bgereranker import BGERerankFunction
+from .cohere import CohereRerankFunction
+from .cross_encoder import CrossEncoderRerankFunction
+from .voyageai import VoyageRerankFunction
 
 __all__ = [
-    "CohereRerankerFunction",
-    "FlagRerankerFunction",
-    "VoyageRerankerFunction",
-    "CrossEncoderRerankerFunction",
+    "CohereRerankFunction",
+    "BGERerankFunction",
+    "VoyageRerankFunction",
+    "CrossEncoderRerankFunction",
 ]

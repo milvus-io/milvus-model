@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from milvus_model.base import BaseRerankerFunction, RerankResult
+from milvus_model.base import BaseRerankFunction, RerankResult
 
 try:
     import voyageai
@@ -8,7 +8,7 @@ except ImportError:
     voyageai = None
 
 
-class VoyageRerankerFunction(BaseRerankerFunction):
+class VoyageRerankFunction(BaseRerankFunction):
     def __init__(self, model_name: str = "rerank-lite-1", api_key: Optional[str] = None):
         if voyageai is None:
             error_message = "voyageai is not installed."

@@ -29,7 +29,6 @@ SOFTWARE.
 import logging
 from typing import Dict, List, Optional
 
-import numpy as np
 import torch
 from scipy.sparse import csr_array, vstack
 
@@ -145,17 +144,14 @@ class _SpladeImplementation:
             logits = self._encode(texts=batch_texts)
             activations = self._get_activation(logits=logits)
             if k_tokens is None:
-                nonzero_indices = [
-                    torch.nonzero(activations["sparse_activations"][i]).t()[0]
-                    for i in range(len(batch_texts))
-                ]
+                nonzero_indices = torch.nonzero(activations["sparse_activations"])
                 activations["activations"] = nonzero_indices
             else:
                 activations = self._update_activations(**activations, k_tokens=k_tokens)
             batch_csr = self._convert_to_csr_array(activations)
             sparse_embs.extend(batch_csr)
 
-        return vstack(sparse_embs)
+        return vstack(sparse_embs).tocsr()
 
     def _get_activation(self, logits: torch.Tensor) -> Dict[str, torch.Tensor]:
         return {"sparse_activations": torch.amax(torch.log1p(self.relu(logits)), dim=1)}
@@ -170,6 +166,16 @@ class _SpladeImplementation:
             device=self.device,
         ).scatter_(dim=1, index=activations.long(), value=1)
 
+        activations = torch.cat(
+            (
+                torch.arange(activations.shape[0], device=activations.device)
+                .repeat_interleave(activations.shape[1])
+                .reshape(-1, 1),
+                activations.reshape((-1, 1)),
+            ),
+            dim=1,
+        )
+
         return {
             "activations": activations,
             "sparse_activations": sparse_activations,
@@ -182,27 +188,19 @@ class _SpladeImplementation:
         return activations
 
     def _convert_to_csr_array(self, activations: Dict):
-        csr_array_list = []
 
-        if activations["sparse_activations"].shape[0] != len(activations["activations"]):
-            error_msg = (
-                "The shape of 'sparse_activations' does not match the length of 'activations'"
-            )
-            raise ValueError(error_msg)
+        values = (
+            activations["sparse_activations"][
+                activations["activations"][:, 0], activations["activations"][:, 1]
+            ]
+            .cpu()
+            .detach()
+            .numpy()
+        )
 
-        for i, column_indices in enumerate(activations["activations"]):
-            values = (
-                torch.gather(activations["sparse_activations"][i], 0, column_indices)
-                .cpu()
-                .detach()
-                .numpy()
-            )
-            row_indices = np.zeros(len(activations["activations"][i]))
-            col_indices = activations["activations"][i].cpu().detach().numpy()
-            csr_array_list.append(
-                csr_array(
-                    (values.flatten(), (row_indices, col_indices)),
-                    shape=(1, activations["sparse_activations"].shape[1]),
-                )
-            )
-        return csr_array_list
+        row_indices = activations["activations"][:, 0].cpu().detach().numpy()
+        col_indices = activations["activations"][:, 1].cpu().detach().numpy()
+        return csr_array(
+            (values.flatten(), (row_indices, col_indices)),
+            shape=activations["sparse_activations"].shape,
+        )

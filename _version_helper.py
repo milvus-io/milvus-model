@@ -72,7 +72,8 @@ def custom_version(version: ScmVersion) -> str:
                 # We're in a release/maintenance branch, next is a patch/rc/beta bump:
                 return version.format_next_version(guess_next_version, fmt=fmt)
     # We're in a development branch, next is a minor bump:
-    return version.format_next_version(guess_next_simple_semver, retain=SEMVER_MINOR, fmt=fmt)
+    #return version.format_next_version(guess_next_simple_semver, retain=SEMVER_MINOR, fmt=fmt)
+    return version.format_next_version(guess_next_version, fmt=fmt)
 
 
 def scm_version() -> str:

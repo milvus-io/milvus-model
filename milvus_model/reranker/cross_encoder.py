@@ -1,6 +1,6 @@
 from typing import Any, List
 
-from milvus_model.base import BaseRerankerFunction, RerankResult
+from milvus_model.base import BaseRerankFunction, RerankResult
 
 try:
     import sentence_transformers
@@ -8,7 +8,7 @@ except ImportError:
     sentence_transformers = None
 
 
-class CrossEncoderRerankerFunction(BaseRerankerFunction):
+class CrossEncoderRerankFunction(BaseRerankFunction):
     def __init__(
         self,
         model_name: str = "",

@@ -44,7 +44,7 @@ class BGERerankFunction(BaseRerankFunction):
     def _batchify(self, texts: List[str], batch_size: int) -> List[List[str]]:
         return [texts[i : i + batch_size] for i in range(0, len(texts), batch_size)]
 
-    def __call__(self, query: str, documents: List[str], top_k: int = 5) -> List[float]:
+    def __call__(self, query: str, documents: List[str], top_k: int = 5) -> List[RerankResult]:
         query_document_pairs = [[query, doc] for doc in documents]
         batched_texts = self._batchify(documents, self.batch_size)
         scores = []

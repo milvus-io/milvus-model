@@ -3,7 +3,6 @@ from typing import List
 
 
 class BaseEmbeddingFunction:
-
     @abstractmethod
     def __call__(self, texts: List[str]):
         """ """

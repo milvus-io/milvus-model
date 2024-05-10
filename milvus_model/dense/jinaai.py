@@ -1,8 +1,8 @@
 import os
-import requests
 from typing import List, Optional
 
 import numpy as np
+import requests
 
 from milvus_model.base import BaseEmbeddingFunction
 
@@ -10,16 +10,22 @@ API_URL = "https://api.jina.ai/v1/embeddings"
 
 
 class JinaEmbeddingFunction(BaseEmbeddingFunction):
-    def __init__(self, model_name: str = "jina-embeddings-v2-base-en", api_key: Optional[str] = None, **kwargs):
+    def __init__(
+        self,
+        model_name: str = "jina-embeddings-v2-base-en",
+        api_key: Optional[str] = None,
+        **kwargs,
+    ):
         if api_key is None:
-            if 'JINAAI_API_KEY' in os.environ and os.environ['JINAAI_API_KEY']:
-                self.api_key = os.environ['JINAAI_API_KEY']
+            if "JINAAI_API_KEY" in os.environ and os.environ["JINAAI_API_KEY"]:
+                self.api_key = os.environ["JINAAI_API_KEY"]
             else:
-                raise ValueError(
-                    f"Did not find api_key, please add an environment variable"
-                    f" `JINAAI_API_KEY` which contains it, or pass"
-                    f"  `api_key` as a named parameter."
+                error_message = (
+                    "Did not find api_key, please add an environment variable"
+                    " `JINAAI_API_KEY` which contains it, or pass"
+                    "  `api_key` as a named parameter."
                 )
+                raise ValueError(error_message)
         else:
             self.api_key = api_key
         self.model_name = model_name
@@ -46,9 +52,8 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
         return self._call_jina_api(texts)
 
     def _call_jina_api(self, texts: List[str]):
-        resp = self._session.post(  # type: ignore
-            API_URL,
-            json={"input": texts, "model": self.model_name},
+        resp = self._session.post(  # type: ignore[assignment]
+            API_URL, json={"input": texts, "model": self.model_name},
         ).json()
         if "data" not in resp:
             raise RuntimeError(resp["detail"])
@@ -56,6 +61,5 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
         embeddings = resp["data"]
 
         # Sort resulting embeddings by index
-        sorted_embeddings = sorted(embeddings, key=lambda e: e["index"])  # type: ignore
-
+        sorted_embeddings = sorted(embeddings, key=lambda e: e["index"])  # type: ignore[no-any-return]
         return [np.array(result["embedding"]) for result in sorted_embeddings]

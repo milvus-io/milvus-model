@@ -71,8 +71,7 @@ class SpladeEmbeddingFunction(BaseEmbeddingFunction):
 
     def encode_documents(self, documents: List[str]) -> csr_array:
         return self._encode(
-            [self.doc_instruction + document for document in documents],
-            self.k_tokens_document,
+            [self.doc_instruction + document for document in documents], self.k_tokens_document,
         )
 
     def _encode(self, texts: List[str], k_tokens: int) -> csr_array:
@@ -80,8 +79,7 @@ class SpladeEmbeddingFunction(BaseEmbeddingFunction):
 
     def encode_queries(self, queries: List[str]) -> csr_array:
         return self._encode(
-            [self.query_instruction + query for query in queries],
-            self.k_tokens_query,
+            [self.query_instruction + query for query in queries], self.k_tokens_query,
         )
 
     @property

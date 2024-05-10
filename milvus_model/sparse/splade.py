@@ -71,8 +71,7 @@ class SpladeEmbeddingFunction(BaseEmbeddingFunction):
 
     def encode_documents(self, documents: List[str]) -> csr_array:
         return self._encode(
-            [self.doc_instruction + document for document in documents],
-            self.k_tokens_document,
+            [self.doc_instruction + document for document in documents], self.k_tokens_document,
         )
 
     def _encode(self, texts: List[str], k_tokens: int) -> csr_array:
@@ -80,8 +79,7 @@ class SpladeEmbeddingFunction(BaseEmbeddingFunction):
 
     def encode_queries(self, queries: List[str]) -> csr_array:
         return self._encode(
-            [self.query_instruction + query for query in queries],
-            self.k_tokens_query,
+            [self.query_instruction + query for query in queries], self.k_tokens_query,
         )
 
     @property
@@ -130,26 +128,26 @@ class _SpladeImplementation:
             padding=True,
         )
         encoded_input = {key: val.to(self.device) for key, val in encoded_input.items()}
-        with torch.no_grad():
-            output = self.model(**encoded_input)
+        output = self.model(**encoded_input)
         return output.logits
 
     def _batchify(self, texts: List[str], batch_size: int) -> List[List[str]]:
         return [texts[i : i + batch_size] for i in range(0, len(texts), batch_size)]
 
     def forward(self, texts: List[str], k_tokens: int) -> csr_array:
-        batched_texts = self._batchify(texts, self.batch_size)
-        sparse_embs = []
-        for batch_texts in batched_texts:
-            logits = self._encode(texts=batch_texts)
-            activations = self._get_activation(logits=logits)
-            if k_tokens is None:
-                nonzero_indices = torch.nonzero(activations["sparse_activations"])
-                activations["activations"] = nonzero_indices
-            else:
-                activations = self._update_activations(**activations, k_tokens=k_tokens)
-            batch_csr = self._convert_to_csr_array(activations)
-            sparse_embs.extend(batch_csr)
+        with torch.no_grad():
+            batched_texts = self._batchify(texts, self.batch_size)
+            sparse_embs = []
+            for batch_texts in batched_texts:
+                logits = self._encode(texts=batch_texts)
+                activations = self._get_activation(logits=logits)
+                if k_tokens is None:
+                    nonzero_indices = torch.nonzero(activations["sparse_activations"])
+                    activations["activations"] = nonzero_indices
+                else:
+                    activations = self._update_activations(**activations, k_tokens=k_tokens)
+                batch_csr = self._convert_to_csr_array(activations)
+                sparse_embs.extend(batch_csr)
 
         return vstack(sparse_embs).tocsr()
 

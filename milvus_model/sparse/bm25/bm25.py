@@ -160,7 +160,7 @@ class BM25EmbeddingFunction(BaseEmbeddingFunction):
 
     def encode_queries(self, queries: List[str]) -> csr_array:
         sparse_embs = [self._encode_query(query) for query in queries]
-        return vstack(sparse_embs)
+        return vstack(sparse_embs).tocsr()
 
     def __call__(self, texts: List[str]) -> csr_array:
         error_message = "Unsupported function called, please check the documentation of 'BM25EmbeddingFunction'."
@@ -168,7 +168,7 @@ class BM25EmbeddingFunction(BaseEmbeddingFunction):
 
     def encode_documents(self, documents: List[str]) -> csr_array:
         sparse_embs = [self._encode_document(document) for document in documents]
-        return vstack(sparse_embs)
+        return vstack(sparse_embs).tocsr()
 
     def save(self, path: str):
         bm25_params = {}

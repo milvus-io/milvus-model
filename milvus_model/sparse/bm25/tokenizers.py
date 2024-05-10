@@ -5,6 +5,7 @@ from importlib.util import find_spec
 from pathlib import Path
 from typing import Any, Dict, List, Match, Optional, Type
 
+import nltk
 import yaml
 from nltk import word_tokenize
 from nltk.corpus import stopwords
@@ -73,6 +74,11 @@ class LowercaseFilter(TextFilter):
 @register_class("StopwordFilter")
 class StopwordFilter(TextFilter):
     def __init__(self, language: str = "english", stopword_list: Optional[List[str]] = None):
+        try:
+            nltk.corpus.stopwords.words(language)
+        except LookupError:
+            nltk.download("stopwords")
+
         if stopword_list is None:
             stopword_list = []
         self.stopwords = set(stopwords.words(language) + stopword_list)
@@ -176,7 +182,7 @@ def build_default_analyzer(language: str = "en"):
 
 
 def build_analyer_from_yaml(filepath: str, name: str):
-    with Path(filepath).open() as file:
+    with Path(filepath).open(encoding="utf-8") as file:
         config = yaml.safe_load(file)
 
     lang_config = config.get(name)

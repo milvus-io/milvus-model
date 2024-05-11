@@ -16,7 +16,7 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
         batch_size: int = 16,
         device: str = "",
         normalize_embeddings: bool = True,
-        use_fp16: bool = True,
+        use_fp16: bool = False,
         return_dense: bool = True,
         return_sparse: bool = True,
         return_colbert_vecs: bool = False,

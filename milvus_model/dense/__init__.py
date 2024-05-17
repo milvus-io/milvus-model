@@ -17,7 +17,7 @@ onnx = LazyImport("onnx", globals(), "milvus_model.dense.onnx")
 def JinaEmbeddingFunction(*args, **kwargs):
     return jinaai.JinaEmbeddingFunction(*args, **kwargs)
 
-def OpenAIEmbeddingFunction(*args, **kwargs):    
+def OpenAIEmbeddingFunction(*args, **kwargs):
     return openai.OpenAIEmbeddingFunction(*args, **kwargs)
 
 def SentenceTransformerEmbeddingFunction(*args, **kwargs):

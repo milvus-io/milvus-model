@@ -1,6 +1,6 @@
-from . import dense, hybrid, sparse
-from .dense.sentence_transformer import SentenceTransformerEmbeddingFunction
+__all__ = ["DefaultEmbeddingFunction", "dense", "sparse", "hybrid", "reranker", "utils"]
 
-__all__ = ["DefaultEmbeddingFunction", "dense", "sparse", "hybrid", "reranker"]
+from . import dense, hybrid, sparse, reranker, utils
+from .dense import OnnxEmebeddingFunction
 
-DefaultEmbeddingFunction = SentenceTransformerEmbeddingFunction
+DefaultEmbeddingFunction = OnnxEmebeddingFunction

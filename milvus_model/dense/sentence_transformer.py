@@ -3,7 +3,10 @@ from typing import List
 import numpy as np
 
 from milvus_model.base import BaseEmbeddingFunction
+from milvus_model.utils import import_sentence_transformers
 
+import_sentence_transformers()
+from sentence_transformers import SentenceTransformer
 
 class SentenceTransformerEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
@@ -16,11 +19,6 @@ class SentenceTransformerEmbeddingFunction(BaseEmbeddingFunction):
         normalize_embeddings: bool = True,
         **kwargs,
     ):
-        try:
-            from sentence_transformers import SentenceTransformer
-        except ImportError as err:
-            error_message = "sentence-transformers is not installed."
-            raise ImportError(error_message) from err
         self.model_name = model_name
         self.query_instruction = query_instruction
         self.doc_instruction = doc_instruction

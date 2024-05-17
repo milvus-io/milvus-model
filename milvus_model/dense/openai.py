@@ -4,7 +4,10 @@ from typing import List, Optional
 import numpy as np
 
 from milvus_model.base import BaseEmbeddingFunction
+from milvus_model.utils import import_openai
 
+import_openai()
+from openai import OpenAI
 
 class OpenAIEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
@@ -15,12 +18,6 @@ class OpenAIEmbeddingFunction(BaseEmbeddingFunction):
         dimensions: Optional[int] = None,
         **kwargs,
     ):
-        try:
-            from openai import OpenAI
-        except ImportError as err:
-            error_message = "openai is not installed."
-            raise ImportError(error_message) from err
-
         self._openai_model_meta_info = defaultdict(dict)
         self._openai_model_meta_info["text-embedding-3-small"]["dim"] = 1536
         self._openai_model_meta_info["text-embedding-3-large"]["dim"] = 3072

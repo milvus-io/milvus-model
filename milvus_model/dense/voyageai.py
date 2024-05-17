@@ -4,15 +4,13 @@ from typing import List, Optional
 import numpy as np
 
 from milvus_model.base import BaseEmbeddingFunction
+from milvus_model.utils import import_voyageai
 
+import_voyageai()
+import voyageai
 
 class VoyageEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(self, model_name: str = "voyage-2", api_key: Optional[str] = None, **kwargs):
-        try:
-            import voyageai
-        except ImportError as err:
-            error_message = "voyageai is not installed."
-            raise ImportError(error_message) from err
         self.model_name = model_name
         self._voyageai_model_meta_info = defaultdict(dict)
         self._voyageai_model_meta_info["voyage-large-2"]["dim"] = 1536

@@ -4,6 +4,10 @@ from typing import Dict, List
 from scipy.sparse import csr_array, vstack
 
 from milvus_model.base import BaseEmbeddingFunction
+from milvus_model.utils import import_FlagEmbedding
+
+import_FlagEmbedding()
+from FlagEmbedding import BGEM3FlagModel
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -22,11 +26,6 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
         return_colbert_vecs: bool = False,
         **kwargs,
     ):
-        try:
-            from FlagEmbedding import BGEM3FlagModel
-        except ImportError as err:
-            error_message = "FlagEmbedding is not installed."
-            raise ImportError(error_message) from err
         self.model_name = model_name
         self.batch_size = batch_size
         self.normalize_embeddings = normalize_embeddings

@@ -16,19 +16,11 @@ requires-python = ">=3.8"
 description = "Model components for PyMilvus, the Python SDK for Milvus"
 readme = "README.md"
 dependencies = [
-    "openai >= 1.12.0",
-    "sentence-transformers",
-    "FlagEmbedding >= 1.2.2",
-    "nltk",
     "transformers >= 4.36.0",
-    "jieba",
-    "konlpy",
-    "mecab-python3",
+    "onnxruntime",
     "scipy >= 1.10.0",
     "protobuf==3.20.2",
-    "unidic-lite",
-    "cohere",
-    "voyageai >= 0.2.0",
+    "numpy"
 ]
 
 classifiers = [

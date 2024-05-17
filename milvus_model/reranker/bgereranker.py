@@ -3,25 +3,16 @@ from typing import List, Optional, Union
 import torch
 
 from milvus_model.base import BaseRerankFunction, RerankResult
+from milvus_model.utils import import_FlagEmbedding, import_transformers
 
-try:
-    from FlagEmbedding import FlagReranker
-    from transformers import (
-        AutoModelForSequenceClassification,
-        AutoTokenizer,
-        is_torch_npu_available,
-    )
-
-    _DEPENDENCIES_AVAILABLE = True
-except ImportError as e:
-    _DEPENDENCY_ERROR_MESSAGE = str(e)
-    _DEPENDENCIES_AVAILABLE = False
-
-    class FlagReranker:
-        def __init__(self, *args, **kwargs):
-            error_message = str(_DEPENDENCY_ERROR_MESSAGE)
-            raise NotImplementedError(error_message)
-
+import_FlagEmbedding()
+import_transformers()
+from FlagEmbedding import FlagReranker
+from transformers import (
+    AutoModelForSequenceClassification,
+    AutoTokenizer,
+    is_torch_npu_available,
+)
 
 class BGERerankFunction(BaseRerankFunction):
     def __init__(
@@ -32,8 +23,6 @@ class BGERerankFunction(BaseRerankFunction):
         normalize: bool = True,
         device: Optional[str] = None,
     ):
-        if _DEPENDENCIES_AVAILABLE is False:
-            raise ImportError(_DEPENDENCY_ERROR_MESSAGE)
 
         self.model_name = model_name
         self.batch_size = batch_size

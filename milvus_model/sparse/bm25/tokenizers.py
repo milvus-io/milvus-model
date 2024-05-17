@@ -4,7 +4,9 @@ import string
 from importlib.util import find_spec
 from pathlib import Path
 from typing import Any, Dict, List, Match, Optional, Type
+from milvus_model.utils import import_nltk, import_jieba, import_mecab, import_konlpy, import_unidic_lite
 
+import_nltk()
 import nltk
 import yaml
 from nltk import word_tokenize
@@ -114,6 +116,7 @@ class Tokenizer:
 @register_class("JiebaTokenizer")
 class JiebaTokenizer(Tokenizer):
     def __init__(self):
+        import_jieba()
         if find_spec("jieba") is None:
             error_message = "jieba is required for JiebaTokenizer but is not installed. Please install it using 'pip install jieba'."
             logger.error(error_message)
@@ -128,6 +131,8 @@ class JiebaTokenizer(Tokenizer):
 @register_class("MecabTokenizer")
 class MecabTokenizer(Tokenizer):
     def __init__(self):
+        import_unidic_lite()
+        import_mecab()
         if find_spec("MeCab") is None:
             error_message = "MeCab is required for MecabTokenizer but is not installed. Please install it using 'pip install mecab-python3'."
             logger.error(error_message)
@@ -143,6 +148,7 @@ class MecabTokenizer(Tokenizer):
 @register_class("KonlpyTokenizer")
 class KonlpyTokenizer(Tokenizer):
     def __init__(self):
+        import_konlpy()
         if find_spec("konlpy") is None:
             error_message = "konlpy is required for KonlpyTokenizer but is not installed. Please install it using 'pip install konlpy'."
             logger.error(error_message)
@@ -178,10 +184,10 @@ class Analyzer:
 
 def build_default_analyzer(language: str = "en"):
     default_config_path = Path(__file__).parent / "lang.yaml"
-    return build_analyer_from_yaml(default_config_path, language)
+    return build_analyzer_from_yaml(default_config_path, language)
 
 
-def build_analyer_from_yaml(filepath: str, name: str):
+def build_analyzer_from_yaml(filepath: str, name: str):
     with Path(filepath).open(encoding="utf-8") as file:
         config = yaml.safe_load(file)
 

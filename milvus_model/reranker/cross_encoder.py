@@ -1,12 +1,10 @@
 from typing import Any, List
 
 from milvus_model.base import BaseRerankFunction, RerankResult
+from milvus_model.utils import import_sentence_transformers
 
-try:
-    import sentence_transformers
-except ImportError:
-    sentence_transformers = None
-
+import_sentence_transformers()
+import sentence_transformers
 
 class CrossEncoderRerankFunction(BaseRerankFunction):
     def __init__(

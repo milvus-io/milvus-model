@@ -33,6 +33,14 @@ import torch
 from scipy.sparse import csr_array, vstack
 
 from milvus_model.base import BaseEmbeddingFunction
+from milvus_model.utils import import_transformers, import_scipy, import_torch
+
+import_torch()
+import_scipy()
+import_transformers()
+import torch
+from scipy.sparse import csr_array, vstack
+from transformers import AutoModelForMaskedLM, AutoTokenizer
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -103,11 +111,6 @@ class _SpladeImplementation:
         batch_size: int = 32,
         **kwargs,
     ):
-        try:
-            from transformers import AutoModelForMaskedLM, AutoTokenizer
-        except ImportError as _:
-            logger.error("transformers is not installed.")
-
         self.device = device
         self.tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
         self.model = AutoModelForMaskedLM.from_pretrained(model_name_or_path, **kwargs)

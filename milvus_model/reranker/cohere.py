@@ -1,18 +1,13 @@
 from typing import List, Optional
 
 from milvus_model.base import BaseRerankFunction, RerankResult
+from milvus_model.utils import import_cohere
 
-try:
-    import cohere
-except ImportError:
-    cohere = None
-
+import_cohere()
+import cohere
 
 class CohereRerankFunction(BaseRerankFunction):
     def __init__(self, model_name: str = "rerank-english-v2.0", api_key: Optional[str] = None):
-        if cohere is None:
-            error_message = "cohere is not installed."
-            raise ImportError(error_message)
         self.model_name = model_name
         self.client = cohere.Client(api_key)
 

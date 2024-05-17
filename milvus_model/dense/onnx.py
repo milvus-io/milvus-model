@@ -43,7 +43,8 @@ class OnnxEmbeddingFunction(BaseEmbeddingFunction):
         ort_outputs = self.ort_session.run(None, ort_inputs)
         ort_feat = ort_outputs[0]
         emb = self._post_proc(ort_feat, ort_inputs["attention_mask"])
-        return emb.flatten()
+        emb =  emb.flatten()
+        return emb / np.linalg.norm(emb)
 
     def _post_proc(self, token_embeddings, attention_mask):
         input_mask_expanded = (

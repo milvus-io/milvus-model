@@ -1,6 +1,6 @@
 __all__ = [
     "import_openai",
-    "import_sentence_transformers", 
+    "import_sentence_transformers",
     "import_FlagEmbedding",
     "import_nltk",
     "import_transformers",
@@ -12,7 +12,8 @@ __all__ = [
     "import_unidic_lite",
     "import_cohere",
     "import_voyageai"
-    "import_torch"
+    "import_torch",
+    "import_huggingface_hub"
     ]
 
 import importlib.util
@@ -61,6 +62,9 @@ def import_voyageai():
 
 def import_torch():
     _check_library("torch", "torch")
+
+def import_huggingface_hub():
+    _check_library("huggingface_hub", package="huggingface-hub")
 
 def _check_library(libname: str, prompt: bool = True, package: Optional[str] = None):
     is_avail = False

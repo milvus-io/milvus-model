@@ -38,8 +38,6 @@ from milvus_model.utils import import_transformers, import_scipy, import_torch
 import_torch()
 import_scipy()
 import_transformers()
-import torch
-from scipy.sparse import csr_array, vstack
 from transformers import AutoModelForMaskedLM, AutoTokenizer
 
 logger = logging.getLogger(__name__)

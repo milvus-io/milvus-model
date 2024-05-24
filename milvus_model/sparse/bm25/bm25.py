@@ -24,6 +24,7 @@ from typing import Dict, List, Optional
 
 import requests
 from scipy.sparse import csr_array, vstack
+import numpy as np
 
 from milvus_model.base import BaseEmbeddingFunction
 from milvus_model.sparse.bm25.tokenizers import Analyzer, build_default_analyzer
@@ -134,7 +135,7 @@ class BM25EmbeddingFunction(BaseEmbeddingFunction):
                 values.append(self.idf[term][0])
                 rows.append(0)
                 cols.append(self.idf[term][1])
-        return csr_array((values, (rows, cols)), shape=(1, len(self.idf)))
+        return csr_array((values, (rows, cols)), shape=(1, len(self.idf))).astype(np.float32)
 
     def _encode_document(self, doc: str) -> csr_array:
         terms = self.analyzer(doc)
@@ -156,7 +157,7 @@ class BM25EmbeddingFunction(BaseEmbeddingFunction):
                 rows.append(0)
                 cols.append(self.idf[term][1])
                 values.append(value)
-        return csr_array((values, (rows, cols)), shape=(1, len(self.idf)))
+        return csr_array((values, (rows, cols)), shape=(1, len(self.idf))).astype(np.float32)
 
     def encode_queries(self, queries: List[str]) -> csr_array:
         sparse_embs = [self._encode_query(query) for query in queries]

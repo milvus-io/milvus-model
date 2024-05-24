@@ -57,6 +57,11 @@ class ReplacePreprocessor:
 
 @register_class("StandardTokenizer")
 class StandardTokenizer:
+    def __init__(self):
+        try:
+           word_tokenize("this is a simple test.") 
+        except LookupError:
+            nltk.download("punkt")
     def tokenize(self, text: str):
         return word_tokenize(text)
 

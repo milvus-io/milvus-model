@@ -49,7 +49,7 @@ class CohereEmbeddingFunction(BaseEmbeddingFunction):
             truncate=self.truncate
         ).embeddings
         if self.embedding_types is None:
-            results = [np.array(data) for data in embeddings]
+            results = [np.array(data, dtype=np.float32) for data in embeddings]
         else:
             results = getattr(embeddings, self.embedding_types[0], None)
             if self.embedding_types[0] == "binary":

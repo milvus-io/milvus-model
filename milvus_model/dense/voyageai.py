@@ -9,6 +9,7 @@ from milvus_model.utils import import_voyageai
 import_voyageai()
 import voyageai
 
+
 class VoyageEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(self, model_name: str = "voyage-2", api_key: Optional[str] = None, **kwargs):
         self.model_name = model_name

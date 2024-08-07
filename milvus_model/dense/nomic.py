@@ -1,21 +1,25 @@
 from typing import List
 import numpy as np
-from collections import defaultdict
-from nomic import embed
 import os
+from collections import defaultdict
 
+from milvus_model.base import BaseEmbeddingFunction
+from milvus_model.utils import import_nomic
 
-class NomicEmbeddingFunction:
+import_nomic()
+from nomic import embed
+
+class NomicEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
         self,
         api_key: str,
         model_name: str = "nomic-embed-text-v1.5",
         task_type: str = "search_document",
-        dimensionality: int = 768,
+        dimensions: int = 768,
         **kwargs,
     ):
         self._nomic_model_meta_info = defaultdict(dict)
-        self._nomic_model_meta_info[model_name]["dim"] = dimensionality  # set the dimension
+        self._nomic_model_meta_info[model_name]["dim"] = dimensions  # set the dimension
 
         if api_key is None:
             if "NOMIC_API_KEY" in os.environ and os.environ["NOMIC_API_KEY"]:
@@ -31,11 +35,15 @@ class NomicEmbeddingFunction:
             self.api_key = api_key
         self.model_name = model_name
         self.task_type = task_type
-        self.dimensionality = dimensionality
+        self.dimensionality = dimensions
+        if "dimensionality" in kwargs: 
+            self.dimensionality = kwargs["dimensionality"]
+            kwargs.pop("dimensionality")
+
         self._encode_config = {
             "model": model_name,
             "task_type": task_type,
-            "dimensionality": dimensionality,
+            "dimensionality": self.dimensionality,
             **kwargs,
         }
 

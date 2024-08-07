@@ -11,9 +11,11 @@ __all__ = [
     "import_protobuf",
     "import_unidic_lite",
     "import_cohere",
-    "import_voyageai"
+    "import_voyageai",
     "import_torch",
-    "import_huggingface_hub"
+    "import_huggingface_hub",
+    "import_mistralai",
+    "import_nomic"
     ]
 
 import importlib.util
@@ -65,6 +67,12 @@ def import_torch():
 
 def import_huggingface_hub():
     _check_library("huggingface_hub", package="huggingface-hub")
+
+def import_mistralai():
+    _check_library("mistralai", package="mistralai")
+
+def import_nomic():
+    _check_library("nomic", package="nomic")
 
 def _check_library(libname: str, prompt: bool = True, package: Optional[str] = None):
     is_avail = False

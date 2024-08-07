@@ -5,7 +5,6 @@ __all__ = [
     "JinaEmbeddingFunction",
     "OnnxEmbeddingFunction",
     "CohereEmbeddingFunction",
-    "VertexAIEmbeddingFunction",
     "MistralAIEmbeddingFunction",
     "NomicEmbeddingFunction",
 ]
@@ -20,7 +19,6 @@ sentence_transformer = LazyImport(
 voyageai = LazyImport("voyageai", globals(), "milvus_model.dense.voyageai")
 onnx = LazyImport("onnx", globals(), "milvus_model.dense.onnx")
 cohere = LazyImport("cohere", globals(), "milvus_model.dense.cohere")
-vertexai = LazyImport("vertexai", globals(), "milvus_model.dense.vertexai")
 mistralai = LazyImport("mistralai", globals(), "milvus_model.dense.mistralai")
 nomic = LazyImport("nomic", globals(), "milvus_model.dense.nomic")
 
@@ -47,10 +45,6 @@ def OnnxEmbeddingFunction(*args, **kwargs):
 
 def CohereEmbeddingFunction(*args, **kwargs):
     return cohere.CohereEmbeddingFunction(*args, **kwargs)
-
-
-def VertexAIEmbeddingFunction(*args, **kwargs):
-    return vertexai.VertexAIEmbeddingFunction(*args, **kwargs)
 
 
 def MistralAIEmbeddingFunction(*args, **kwargs):

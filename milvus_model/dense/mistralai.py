@@ -1,11 +1,15 @@
 from typing import List, Optional
+import os
 import numpy as np
 from collections import defaultdict
+
+from milvus_model.base import BaseEmbeddingFunction
+from milvus_model.utils import import_mistralai
+
+import_mistralai()
 from mistralai.client import MistralClient
-import os
 
-
-class MistralAIEmbeddingFunction:
+class MistralAIEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
         self,
         api_key: str,

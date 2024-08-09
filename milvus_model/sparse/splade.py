@@ -30,10 +30,11 @@ import logging
 from typing import Dict, List, Optional
 
 import torch
-from scipy.sparse import csr_array, vstack
+from scipy.sparse import csr_array
 
 from milvus_model.base import BaseEmbeddingFunction
 from milvus_model.utils import import_transformers, import_scipy, import_torch
+from milvus_model.sparse.utils import stack_sparse_embeddings
 
 import_torch()
 import_scipy()
@@ -149,8 +150,7 @@ class _SpladeImplementation:
                     activations = self._update_activations(**activations, k_tokens=k_tokens)
                 batch_csr = self._convert_to_csr_array(activations)
                 sparse_embs.extend(batch_csr)
-
-        return vstack(sparse_embs).tocsr()
+        return stack_sparse_embeddings(sparse_embs).tocsr()
 
     def _get_activation(self, logits: torch.Tensor) -> Dict[str, torch.Tensor]:
         return {"sparse_activations": torch.amax(torch.log1p(self.relu(logits)), dim=1)}

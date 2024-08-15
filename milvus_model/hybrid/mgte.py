@@ -13,12 +13,13 @@ import numpy as np
 
 from milvus_model.base import BaseEmbeddingFunction
 from milvus_model.utils import import_transformers, import_scipy, import_torch
+from milvus_model.sparse.utils import stack_sparse_embeddings
 
 import_torch()
 import_scipy()
 import_transformers()
 
-from scipy.sparse import csr_array, vstack
+from scipy.sparse import csr_array
 import torch
 from transformers import AutoModelForTokenClassification, AutoTokenizer
 from transformers.utils import is_torch_npu_available
@@ -197,7 +198,7 @@ class MGTEEmbeddingFunction(BaseEmbeddingFunction):
                 row_indices = [0] * len(indices)
                 csr = csr_array((values, (row_indices, indices)), shape=(1, sparse_dim))
                 results["sparse"].append(csr)
-            results["sparse"] = vstack(results["sparse"]).tocsr()
+            results["sparse"] = stack_sparse_embeddings(results["sparse"]).tocsr()
         return results
 
     def encode_queries(self, queries: List[str]) -> Dict:

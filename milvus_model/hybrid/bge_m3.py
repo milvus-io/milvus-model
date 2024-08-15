@@ -1,11 +1,12 @@
 import logging
 from typing import Dict, List
 
-from scipy.sparse import csr_matrix, vstack
+from scipy.sparse import csr_array
 import numpy as np
 
 from milvus_model.base import BaseEmbeddingFunction
 from milvus_model.utils import import_FlagEmbedding
+from milvus_model.sparse.utils import stack_sparse_embeddings
 
 import_FlagEmbedding()
 from FlagEmbedding import BGEM3FlagModel
@@ -81,9 +82,9 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
                 indices = [int(k) for k in sparse_vec]
                 values = np.array(list(sparse_vec.values()), dtype=np.float64)
                 row_indices = [0] * len(indices)
-                csr = csr_matrix((values, (row_indices, indices)), shape=(1, sparse_dim)) 
+                csr = csr_array((values, (row_indices, indices)), shape=(1, sparse_dim))
                 results["sparse"].append(csr)
-            results["sparse"] = vstack(results["sparse"]).tocsr()
+            results["sparse"] =  stack_sparse_embeddings(results["sparse"]).tocsr()
         if self._encode_config["return_colbert_vecs"] is True:
             results["colbert_vecs"] = output["colbert_vecs"]
         return results

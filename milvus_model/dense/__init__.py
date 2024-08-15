@@ -7,6 +7,7 @@ __all__ = [
     "CohereEmbeddingFunction",
     "MistralAIEmbeddingFunction",
     "NomicEmbeddingFunction",
+    "InstructorEmbeddingFunction"
 ]
 
 from milvus_model.utils.lazy_import import LazyImport
@@ -21,6 +22,7 @@ onnx = LazyImport("onnx", globals(), "milvus_model.dense.onnx")
 cohere = LazyImport("cohere", globals(), "milvus_model.dense.cohere")
 mistralai = LazyImport("mistralai", globals(), "milvus_model.dense.mistralai")
 nomic = LazyImport("nomic", globals(), "milvus_model.dense.nomic")
+instructor = LazyImport("instructor", globals(), "milvus_model.dense.instructor")
 
 
 def JinaEmbeddingFunction(*args, **kwargs):
@@ -53,3 +55,7 @@ def MistralAIEmbeddingFunction(*args, **kwargs):
 
 def NomicEmbeddingFunction(*args, **kwargs):
     return nomic.NomicEmbeddingFunction(*args, **kwargs)
+
+
+def InstructorEmbeddingFunction(*args, **kwargs):
+    return instructor.InstructorEmbeddingFunction(*args, **kwargs)

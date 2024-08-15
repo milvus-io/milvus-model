@@ -15,7 +15,8 @@ __all__ = [
     "import_torch",
     "import_huggingface_hub",
     "import_mistralai",
-    "import_nomic"
+    "import_nomic",
+    "import_instructor",
     ]
 
 import importlib.util
@@ -73,6 +74,9 @@ def import_mistralai():
 
 def import_nomic():
     _check_library("nomic", package="nomic")
+
+def import_instructor():
+    _check_library("InstructorEmbedding", package="InstructorEmbedding")
 
 def _check_library(libname: str, prompt: bool = True, package: Optional[str] = None):
     is_avail = False

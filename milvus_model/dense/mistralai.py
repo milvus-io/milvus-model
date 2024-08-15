@@ -7,7 +7,7 @@ from milvus_model.base import BaseEmbeddingFunction
 from milvus_model.utils import import_mistralai
 
 import_mistralai()
-from mistralai.client import MistralClient
+from mistralai import Mistral
 
 class MistralAIEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
@@ -55,9 +55,9 @@ class MistralAIEmbeddingFunction(BaseEmbeddingFunction):
         return self._encode([document])[0]
 
     def _call_mistral_api(self, texts: List[str]):
-        embeddings_batch_response = self.client.embeddings(
+        embeddings_batch_response = self.client.embeddings.create(
             model=self.model_name,
-            input=texts,
+            inputs=texts,
         )
         return [np.array(data.embedding) for data in embeddings_batch_response.data]
 

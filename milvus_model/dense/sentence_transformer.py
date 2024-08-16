@@ -33,7 +33,11 @@ class SentenceTransformerEmbeddingFunction(BaseEmbeddingFunction):
 
     def _encode(self, texts: List[str]) -> List[np.array]:
         embs = self.model.encode(
-            texts, batch_size=self.batch_size, show_progress_bar=False, convert_to_numpy=True,
+            texts, 
+            batch_size=self.batch_size,
+            show_progress_bar=False,
+            convert_to_numpy=True,
+            normalize_embeddings=self.normalize_embeddings
         )
         return list(embs)
 

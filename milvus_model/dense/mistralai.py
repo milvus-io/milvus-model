@@ -32,7 +32,7 @@ class MistralAIEmbeddingFunction(BaseEmbeddingFunction):
         else:
             self.api_key = api_key
         self.model_name = model_name
-        self.client = MistralClient(api_key=api_key)
+        self.client = Mistral(api_key=api_key)
         self._encode_config = {"model": model_name, **kwargs}
 
     def encode_queries(self, queries: List[str]) -> List[np.array]:

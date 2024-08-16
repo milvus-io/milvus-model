@@ -1,6 +1,4 @@
 from typing import List, Optional
-import struct
-from collections import defaultdict
 import numpy as np
 
 from milvus_model.base import BaseEmbeddingFunction
@@ -36,7 +34,11 @@ class InstructorEmbeddingFunction(BaseEmbeddingFunction):
 
     def _encode(self, texts: List[str]) -> List[np.array]:
         embs = self.model.encode(
-            texts, batch_size=self.batch_size, show_progress_bar=False, convert_to_numpy=True,
+            texts,
+            batch_size=self.batch_size,
+            show_progress_bar=False,
+            convert_to_numpy=True,
+            normalize_embeddings=self.normalize_embeddings
         )
         return list(embs)
 

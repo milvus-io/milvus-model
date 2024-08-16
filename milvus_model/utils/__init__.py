@@ -31,6 +31,7 @@ def import_sentence_transformers():
     _check_library("sentence_transformers", package="sentence-transformers")
 
 def import_FlagEmbedding():
+    _check_library("peft", package="peft")
     _check_library("FlagEmbedding", package="FlagEmbedding>=1.2.2")
 
 def import_nltk():

@@ -18,7 +18,7 @@ import json
 import logging
 import math
 from collections import defaultdict
-from multiprocessing import Pool, cpu_count
+from multiprocessing import Pool
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -44,7 +44,7 @@ class BM25EmbeddingFunction(BaseEmbeddingFunction):
         k1: float = 1.5,
         b: float = 0.75,
         epsilon: float = 0.25,
-        num_workers: Optional[int] = None,
+        num_workers: int = 1,
     ):
         if analyzer is None:
             analyzer = build_default_analyzer(language="en")
@@ -55,8 +55,6 @@ class BM25EmbeddingFunction(BaseEmbeddingFunction):
         self.k1 = k1
         self.b = b
         self.epsilon = epsilon
-        if num_workers is None:
-            self.num_workers = cpu_count()
         self.num_workers = num_workers
 
         if analyzer and corpus is not None:

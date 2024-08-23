@@ -5,11 +5,20 @@ from scipy.sparse import csr_array
 import numpy as np
 
 from milvus_model.base import BaseEmbeddingFunction
-from milvus_model.utils import import_FlagEmbedding
+from milvus_model.utils import import_FlagEmbedding, import_datasets
 from milvus_model.sparse.utils import stack_sparse_embeddings
 
+import_datasets()
 import_FlagEmbedding()
-from FlagEmbedding import BGEM3FlagModel
+
+try:
+    from FlagEmbedding import BGEM3FlagModel
+except AttributeError as e:
+    import sys
+    if "google.colab" in sys.modules and "ListView" in str(e):
+        print("\033[91mIt looks like you're running on Google Colab. Please restart the session to resolve this issue.\033[0m")
+        print("\033[91mFor further details, visit: https://github.com/milvus-io/milvus-model/issues/32.\033[0m")
+    raise
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

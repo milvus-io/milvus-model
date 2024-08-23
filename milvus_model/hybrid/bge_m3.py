@@ -5,9 +5,10 @@ from scipy.sparse import csr_array
 import numpy as np
 
 from milvus_model.base import BaseEmbeddingFunction
-from milvus_model.utils import import_FlagEmbedding
+from milvus_model.utils import import_FlagEmbedding, import_datasets
 from milvus_model.sparse.utils import stack_sparse_embeddings
 
+import_datasets()
 import_FlagEmbedding()
 from FlagEmbedding import BGEM3FlagModel
 

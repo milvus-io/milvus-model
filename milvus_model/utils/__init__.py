@@ -17,6 +17,7 @@ __all__ = [
     "import_mistralai",
     "import_nomic",
     "import_instructor",
+    "import_datasets",
     ]
 
 import importlib.util
@@ -78,6 +79,9 @@ def import_nomic():
 
 def import_instructor():
     _check_library("InstructorEmbedding", package="InstructorEmbedding")
+
+def import_datasets():
+    _check_library("datasets", package="datasets")
 
 def _check_library(libname: str, prompt: bool = True, package: Optional[str] = None):
     is_avail = False

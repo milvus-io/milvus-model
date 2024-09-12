@@ -15,7 +15,6 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
         model_name: str = "jina-embeddings-v3",
         api_key: Optional[str] = None,
         dimensions: Optional[int] = None,
-        task_type: Optional[str] = None,
         **kwargs,
     ):
         if api_key is None:
@@ -36,7 +35,6 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
             {"Authorization": f"Bearer {self.api_key}", "Accept-Encoding": "identity"}
         )
         self.model_name = model_name
-        self.task_type = task_type
         self._dim = dimensions
 
     @property
@@ -46,20 +44,20 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
         return self._dim
 
     def encode_queries(self, queries: List[str]) -> List[np.array]:
-        return self._call_jina_api(queries)
+        return self._call_jina_api(queries, task_type='retrieval.query')
 
     def encode_documents(self, documents: List[str]) -> List[np.array]:
-        return self._call_jina_api(documents)
+        return self._call_jina_api(documents, task_type='retrieval.passage')
 
-    def __call__(self, texts: List[str]) -> List[np.array]:
-        return self._call_jina_api(texts)
+    def __call__(self, texts: List[str], task_type: Optional[str] = None) -> List[np.array]:
+        return self._call_jina_api(texts, task_type=task_type)
 
-    def _call_jina_api(self, texts: List[str]):
+    def _call_jina_api(self, texts: List[str], task_type: Optional[str] = None):
         data = {
             "input": texts,
             "model": self.model_name,
             "dimensions": self.dimensions,
-            "task_type": self.task_type,
+            "task_type": task_type,
         }
         resp = self._session.post(  # type: ignore[assignment]
             API_URL,

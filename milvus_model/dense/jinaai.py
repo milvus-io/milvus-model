@@ -12,8 +12,10 @@ API_URL = "https://api.jina.ai/v1/embeddings"
 class JinaEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
         self,
-        model_name: str = "jina-embeddings-v2-base-en",
+        model_name: str = "jina-embeddings-v3",
         api_key: Optional[str] = None,
+        dimensions: Optional[int] = None,
+        task_type: Optional[str] = None,
         **kwargs,
     ):
         if api_key is None:
@@ -34,7 +36,8 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
             {"Authorization": f"Bearer {self.api_key}", "Accept-Encoding": "identity"}
         )
         self.model_name = model_name
-        self._dim = None
+        self.task_type = task_type
+        self._dim = dimensions
 
     @property
     def dim(self):
@@ -52,8 +55,13 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
         return self._call_jina_api(texts)
 
     def _call_jina_api(self, texts: List[str]):
+        data = {"input": texts, "model": self.model_name}
+        if self.model_name == "jina-embeddings-v3":
+            data["dimensions"] = self.dimensions
+            data["task_type"] = self.task_type
         resp = self._session.post(  # type: ignore[assignment]
-            API_URL, json={"input": texts, "model": self.model_name},
+            API_URL,
+            json=data,
         ).json()
         if "data" not in resp:
             raise RuntimeError(resp["detail"])

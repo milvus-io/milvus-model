@@ -55,10 +55,12 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
         return self._call_jina_api(texts)
 
     def _call_jina_api(self, texts: List[str]):
-        data = {"input": texts, "model": self.model_name}
-        if self.model_name == "jina-embeddings-v3":
-            data["dimensions"] = self.dimensions
-            data["task_type"] = self.task_type
+        data = {
+            "input": texts,
+            "model": self.model_name,
+            "dimensions": self.dimensions,
+            "task_type": self.task_type,
+        }
         resp = self._session.post(  # type: ignore[assignment]
             API_URL,
             json=data,

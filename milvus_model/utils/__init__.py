@@ -36,7 +36,7 @@ def import_FlagEmbedding():
     _check_library("FlagEmbedding", package="FlagEmbedding>=1.2.2")
 
 def import_nltk():
-    _check_library("nltk", package="nltk")
+    _check_library("nltk", package="nltk>=3.9.1")
 
 def import_transformers():
     _check_library("transformers", package="transformers>=4.36.0")

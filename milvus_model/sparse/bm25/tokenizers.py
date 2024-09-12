@@ -61,7 +61,7 @@ class StandardTokenizer:
         try:
            word_tokenize("this is a simple test.") 
         except LookupError:
-            nltk.download("punkt")
+            nltk.download("punkt_tab")
     def tokenize(self, text: str):
         return word_tokenize(text)
 

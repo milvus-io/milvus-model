@@ -16,6 +16,7 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
         api_key: Optional[str] = None,
         task: str = 'retrieval.passage',
         dimensions: Optional[int] = None,
+        late_chunking: Optional[bool] = False,
         **kwargs,
     ):
         if api_key is None:
@@ -37,6 +38,7 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
         )
         self.task = task
         self._dim = dimensions
+        self.late_chunking = late_chunking
 
     @property
     def dim(self):
@@ -58,6 +60,7 @@ class JinaEmbeddingFunction(BaseEmbeddingFunction):
             "input": texts,
             "model": self.model_name,
             "task": task,
+            "late_chunking": self.late_chunking,
         }
         if self._dim is not None:
             data["dimensions"] = self._dim

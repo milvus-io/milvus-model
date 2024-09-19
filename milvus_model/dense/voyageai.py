@@ -11,9 +11,16 @@ import voyageai
 
 
 class VoyageEmbeddingFunction(BaseEmbeddingFunction):
-    def __init__(self, model_name: str = "voyage-2", api_key: Optional[str] = None, **kwargs):
+    def __init__(self, model_name: str = "voyage-3", api_key: Optional[str] = None, **kwargs):
         self.model_name = model_name
         self._voyageai_model_meta_info = defaultdict(dict)
+        self._voyageai_model_meta_info["voyage-3"]["dim"] = 1024
+        self._voyageai_model_meta_info["voyage-3-lite"]["dim"] = 512
+        self._voyageai_model_meta_info["voyage-finance-2"]["dim"] = 1024
+        self._voyageai_model_meta_info["voyage-multilingual-2"]["dim"] = 1024
+        self._voyageai_model_meta_info["voyage-law-2"]["dim"] = 1024
+        self._voyageai_model_meta_info["voyage-code-2"]["dim"] = 1536
+        #old model
         self._voyageai_model_meta_info["voyage-large-2"]["dim"] = 1536
         self._voyageai_model_meta_info["voyage-code-2"]["dim"] = 1536
         self._voyageai_model_meta_info["voyage-2"]["dim"] = 1024

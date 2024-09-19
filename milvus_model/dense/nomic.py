@@ -12,7 +12,6 @@ from nomic import embed
 class NomicEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
         self,
-        api_key: str,
         model_name: str = "nomic-embed-text-v1.5",
         task_type: str = "search_document",
         dimensions: int = 768,
@@ -21,18 +20,6 @@ class NomicEmbeddingFunction(BaseEmbeddingFunction):
         self._nomic_model_meta_info = defaultdict(dict)
         self._nomic_model_meta_info[model_name]["dim"] = dimensions  # set the dimension
 
-        if api_key is None:
-            if "NOMIC_API_KEY" in os.environ and os.environ["NOMIC_API_KEY"]:
-                self.api_key = os.environ["NOMIC_API_KEY"]
-            else:
-                error_message = (
-                    "Did not find api_key, please add an environment variable"
-                    " `NOMIC_API_KEY` which contains it, or pass"
-                    "  `api_key` as a named parameter."
-                )
-                raise ValueError(error_message)
-        else:
-            self.api_key = api_key
         self.model_name = model_name
         self.task_type = task_type
         self.dimensionality = dimensions
@@ -67,12 +54,9 @@ class NomicEmbeddingFunction(BaseEmbeddingFunction):
         return self._encode([document], task_type="search_document")[0]
 
     def _call_nomic_api(self, texts: List[str], task_type: str):
-        headers = {"Authorization": f"Bearer {self.api_key}"}
         embeddings_batch_response = embed.text(
             texts=texts,
-            model=self.model_name,
-            task_type=task_type,
-            dimensionality=self.dimensionality,
+            **self._encode_config
         )
         return [np.array(embedding) for embedding in embeddings_batch_response["embeddings"]]
 

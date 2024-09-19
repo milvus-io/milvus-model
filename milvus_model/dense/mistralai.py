@@ -56,8 +56,8 @@ class MistralAIEmbeddingFunction(BaseEmbeddingFunction):
 
     def _call_mistral_api(self, texts: List[str]):
         embeddings_batch_response = self.client.embeddings.create(
-            model=self.model_name,
             inputs=texts,
+            **self._encode_config
         )
         return [np.array(data.embedding) for data in embeddings_batch_response.data]
 

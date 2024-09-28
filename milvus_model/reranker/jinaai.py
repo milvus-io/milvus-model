@@ -9,7 +9,7 @@ API_URL = "https://api.jina.ai/v1/rerank"
 
 
 class JinaRerankFunction(BaseRerankFunction):
-    def __init__(self, model_name: str = "jina-reranker-v1-base-en", api_key: Optional[str] = None):
+    def __init__(self, model_name: str = "jina-reranker-v2-base-multilingual", api_key: Optional[str] = None):
         if api_key is None:
             if "JINAAI_API_KEY" in os.environ and os.environ["JINAAI_API_KEY"]:
                 self.api_key = os.environ["JINAAI_API_KEY"]

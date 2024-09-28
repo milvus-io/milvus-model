@@ -60,7 +60,7 @@ def import_unidic_lite():
     _check_library("unidic-lite", package="unidic-lite")
 
 def import_cohere():
-    _check_library("cohere", "cohere")
+    _check_library("cohere", "cohere>=5.10.0")
 
 def import_voyageai():
     _check_library("voyageai", "voyageai>=0.2.0")

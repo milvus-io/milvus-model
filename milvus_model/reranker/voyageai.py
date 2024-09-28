@@ -7,7 +7,7 @@ import_voyageai()
 import voyageai
 
 class VoyageRerankFunction(BaseRerankFunction):
-    def __init__(self, model_name: str = "rerank-lite-1", api_key: Optional[str] = None):
+    def __init__(self, model_name: str = "rerank-2", api_key: Optional[str] = None):
         self.model_name = model_name
         self.client = voyageai.Client(api_key=api_key)
 

@@ -33,7 +33,7 @@ def import_sentence_transformers():
 
 def import_FlagEmbedding():
     _check_library("peft", package="peft")
-    _check_library("FlagEmbedding", package="FlagEmbedding~=1.2.11")
+    _check_library("FlagEmbedding", package="FlagEmbedding")
 
 def import_nltk():
     _check_library("nltk", package="nltk>=3.9.1")

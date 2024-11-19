@@ -48,10 +48,14 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
                 "Using fp16 with CPU can lead to runtime errors such as 'LayerNormKernelImpl', It's recommended to set 'use_fp16 = False' when using cpu. "
             )
 
+        if "devices" in kwargs:
+            device = devices
+            kwargs.pop(device)
+
         _model_config = dict(
             {
                 "model_name_or_path": model_name,
-                "device": device,
+                "devices": device,
                 "normalize_embeddings": normalize_embeddings,
                 "use_fp16": use_fp16,
             },
@@ -80,7 +84,6 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
         }
 
     def _encode(self, texts: List[str]) -> Dict:
-        # Change 'sentences' to 'queries' to match the expected parameter
         output = self.model.encode(queries=texts, **self._encode_config)
         results = {}
         if self._encode_config["return_dense"] is True:

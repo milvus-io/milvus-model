@@ -80,7 +80,8 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
         }
 
     def _encode(self, texts: List[str]) -> Dict:
-        output = self.model.encode(sentences=texts, **self._encode_config)
+        # Change 'sentences' to 'queries' to match the expected parameter
+        output = self.model.encode(queries=texts, **self._encode_config)
         results = {}
         if self._encode_config["return_dense"] is True:
             results["dense"] = list(output["dense_vecs"])
@@ -93,10 +94,11 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
                 row_indices = [0] * len(indices)
                 csr = csr_array((values, (row_indices, indices)), shape=(1, sparse_dim))
                 results["sparse"].append(csr)
-            results["sparse"] =  stack_sparse_embeddings(results["sparse"]).tocsr()
+            results["sparse"] = stack_sparse_embeddings(results["sparse"]).tocsr()
         if self._encode_config["return_colbert_vecs"] is True:
             results["colbert_vecs"] = output["colbert_vecs"]
         return results
+
 
     def encode_queries(self, queries: List[str]) -> Dict:
         return self._encode(queries)

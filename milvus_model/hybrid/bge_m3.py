@@ -29,7 +29,7 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
         self,
         model_name: str = "BAAI/bge-m3",
         batch_size: int = 16,
-        device: str = "",
+        device: str = None,
         normalize_embeddings: bool = True,
         use_fp16: bool = False,
         return_dense: bool = True,

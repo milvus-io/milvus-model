@@ -49,13 +49,13 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
             )
 
         if "devices" in kwargs:
-            device = devices
-            kwargs.pop(device)
+            device = kwargs["devices"]
+            kwargs.pop("devices")
 
         _model_config = dict(
             {
                 "model_name_or_path": model_name,
-                "devices": device,
+                "device": device,
                 "normalize_embeddings": normalize_embeddings,
                 "use_fp16": use_fp16,
             },

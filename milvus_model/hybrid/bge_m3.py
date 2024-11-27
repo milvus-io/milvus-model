@@ -55,7 +55,7 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
         _model_config = dict(
             {
                 "model_name_or_path": model_name,
-                "device": device,
+                "devices": device,
                 "normalize_embeddings": normalize_embeddings,
                 "use_fp16": use_fp16,
             },

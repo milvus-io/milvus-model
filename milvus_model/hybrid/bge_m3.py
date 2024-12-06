@@ -84,7 +84,7 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
         }
 
     def _encode(self, texts: List[str]) -> Dict:
-        output = self.model.encode(queries=texts, **self._encode_config)
+        output = self.model.encode(sentences=texts, **self._encode_config)
         results = {}
         if self._encode_config["return_dense"] is True:
             results["dense"] = list(output["dense_vecs"])

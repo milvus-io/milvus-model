@@ -36,7 +36,7 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
         self._voyageai_model_meta_info["voyage-lite-02-instruct"]["dim"] = [1024]
 
         if dimension is not None and dimension not in self._voyageai_model_meta_info[self.model_name]["dim"]:
-            raise ValueError(f"The provided dimension ({dimension}) is not supported by the selected model. "
+            raise ValueError(f"The provided dimension ({dimension}) is not supported by the selected model ({self.model_name}). "
                              "Leave this parameter empty to use the default dimension for the model. "
                              "Please check the supported dimensions here: https://docs.voyageai.com/docs/embeddings"
                              )
@@ -46,13 +46,13 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
 
         if self.model_name in ['voyage-3-large', 'voyage-code-3']:
             if embedding_type is not None and embedding_type not in ['float', 'binary', 'ubinary']:
-                raise ValueError(f"The provided embedding_type ({embedding_type}) is not supported by the selected model. "
-                                 f"Leave this parameter empty for the default embedding_type (float). "
+                raise ValueError(f"The provided embedding_type ({embedding_type}) is not supported by the selected model "
+                                 f"({self.model_name}). Leave this parameter empty for the default embedding_type (float). "
                                  f"Please check the supported embedding_type values here: https://docs.voyageai.com/docs/embeddings")
         else:
             if embedding_type is not None and embedding_type != 'float':
-                raise ValueError(f"The provided embedding_type ({embedding_type}) is not supported by the selected model. "
-                                 f"Leave this parameter empty for the default embedding_type (float). "
+                raise ValueError(f"The provided embedding_type ({embedding_type}) is not supported by the selected model "
+                                 f"({self.model_name}). Leave this parameter empty for the default embedding_type (float). "
                                  f"Please check the supported embedding_type values here: https://docs.voyageai.com/docs/embeddings")
 
         self.embedding_type = embedding_type

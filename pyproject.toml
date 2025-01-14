@@ -30,6 +30,9 @@ classifiers = [
 
 dynamic = ["version"]
 
+[tool.setuptools]
+package-dir = { "pymilvus.model" = "milvus_model" }
+
 [project.urls]
 repository = "https://github.com/milvus-io/milvus-model"  # Update the repository URL
 

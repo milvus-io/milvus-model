@@ -30,6 +30,12 @@ classifiers = [
 
 dynamic = ["version"]
 
+[tool.setuptools]
+package-dir = { "" = "src/" }
+
+[tool.setuptools.package-data]
+"pymilvus.model.sparse.bm25" = ["lang.yaml"]
+
 [project.urls]
 repository = "https://github.com/milvus-io/milvus-model"  # Update the repository URL
 

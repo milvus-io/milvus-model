@@ -6,8 +6,7 @@ import numpy as np
 from pymilvus.model.base import BaseEmbeddingFunction
 from pymilvus.model.utils import import_cohere
 
-import_cohere()
-import cohere
+
 
 class CohereEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(self,
@@ -21,6 +20,9 @@ class CohereEmbeddingFunction(BaseEmbeddingFunction):
         self.input_type = input_type
         self.embedding_types = embedding_types
         self.truncate = truncate
+
+        import_cohere()
+        import cohere
 
         if isinstance(embedding_types, list):
             if len(embedding_types) > 1:

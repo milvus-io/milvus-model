@@ -7,9 +7,6 @@ import struct
 from pymilvus.model.base import BaseEmbeddingFunction
 from pymilvus.model.utils import import_voyageai
 
-import_voyageai()
-import voyageai
-
 
 class VoyageEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(self,
@@ -19,6 +16,9 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
                  truncate: Optional[bool] = None,
                  dimension: Optional[int] = None,
                  **kwargs):
+        import_voyageai()
+        import voyageai
+
         self.model_name = model_name
         self.truncate = truncate
         self._voyageai_model_meta_info = defaultdict(dict)

@@ -6,8 +6,6 @@ from collections import defaultdict
 from pymilvus.model.base import BaseEmbeddingFunction
 from pymilvus.model.utils import import_nomic
 
-import_nomic()
-from nomic import embed
 
 class NomicEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
@@ -54,6 +52,9 @@ class NomicEmbeddingFunction(BaseEmbeddingFunction):
         return self._encode([document], task_type="search_document")[0]
 
     def _call_nomic_api(self, texts: List[str], task_type: str):
+        import_nomic()
+        from nomic import embed
+
         embeddings_batch_response = embed.text(
             texts=texts,
             **self._encode_config

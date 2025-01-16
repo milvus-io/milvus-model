@@ -2,14 +2,18 @@
 import onnxruntime
 
 from transformers import AutoTokenizer, AutoConfig
-from huggingface_hub import hf_hub_download
 import numpy as np
 from typing import List
 
 from pymilvus.model.base import BaseEmbeddingFunction
+from pymilvus.model.utils import import_huggingface_hub
+
 
 class OnnxEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(self, model_name: str = "GPTCache/paraphrase-albert-onnx", tokenizer_name: str = "GPTCache/paraphrase-albert-small-v2"):
+        import_huggingface_hub()
+        from huggingface_hub import hf_hub_download
+
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
         self.model_name = model_name
         onnx_model_path = hf_hub_download(repo_id=model_name, filename="model.onnx")

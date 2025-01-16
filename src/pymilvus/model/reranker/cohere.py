@@ -3,11 +3,12 @@ from typing import List, Optional
 from pymilvus.model.base import BaseRerankFunction, RerankResult
 from pymilvus.model.utils import import_cohere
 
-import_cohere()
-import cohere
 
 class CohereRerankFunction(BaseRerankFunction):
     def __init__(self, model_name: str = "rerank-english-v3.0", api_key: Optional[str] = None, return_documents=True, **kwargs):
+        import_cohere()
+        import cohere
+
         self.model_name = model_name
         self.client = cohere.ClientV2(api_key)
         self.rerank_config = {"return_documents": return_documents, **kwargs} 

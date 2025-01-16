@@ -3,11 +3,12 @@ from typing import List, Optional
 from pymilvus.model.base import BaseRerankFunction, RerankResult
 from pymilvus.model.utils import import_voyageai
 
-import_voyageai()
-import voyageai
 
 class VoyageRerankFunction(BaseRerankFunction):
     def __init__(self, model_name: str = "rerank-2", api_key: Optional[str] = None):
+        import_voyageai()
+        import voyageai
+
         self.model_name = model_name
         self.client = voyageai.Client(api_key=api_key)
 

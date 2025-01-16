@@ -1,3 +1,9 @@
+from pymilvus.model.reranker.cohere import CohereRerankFunction
+from pymilvus.model.reranker.bgereranker import BGERerankFunction
+from pymilvus.model.reranker.voyageai import VoyageRerankFunction
+from pymilvus.model.reranker.cross_encoder import CrossEncoderRerankFunction
+from pymilvus.model.reranker.jinaai import JinaRerankFunction
+
 __all__ = [
     "CohereRerankFunction",
     "BGERerankFunction",
@@ -5,26 +11,3 @@ __all__ = [
     "CrossEncoderRerankFunction",
     "JinaRerankFunction",
 ]
-
-from pymilvus.model.utils.lazy_import import LazyImport
-
-bgegreranker = LazyImport("bgereranker", globals(), "pymilvus.model.reranker.bgereranker")
-cohere = LazyImport("cohere", globals(), "pymilvus.model.reranker.cohere")
-cross_encoder = LazyImport("cross_encoder", globals(), "pymilvus.model.reranker.cross_encoder")
-jinaai = LazyImport("jinaai", globals(), "pymilvus.model.reranker.jinaai")
-voyageai = LazyImport("voyageai", globals(), "pymilvus.model.reranker.voyageai")
-
-def BGERerankFunction(*args, **kwargs):
-    return bgegreranker.BGERerankFunction(*args, **kwargs)
-
-def CohereRerankFunction(*args, **kwargs):
-    return cohere.CohereRerankFunction(*args, **kwargs)
-
-def CrossEncoderRerankFunction(*args, **kwargs):
-    return cross_encoder.CrossEncoderRerankFunction(*args, **kwargs)
-
-def JinaRerankFunction(*args, **kwargs):
-    return jinaai.JinaRerankFunction(*args, **kwargs)
-
-def VoyageRerankFunction(*args, **kwargs):
-    return voyageai.VoyageRerankFunction(*args, **kwargs)

@@ -8,17 +8,6 @@ from pymilvus.model.base import BaseEmbeddingFunction
 from pymilvus.model.utils import import_FlagEmbedding, import_datasets
 from pymilvus.model.sparse.utils import stack_sparse_embeddings
 
-import_datasets()
-import_FlagEmbedding()
-
-try:
-    from FlagEmbedding import BGEM3FlagModel
-except AttributeError as e:
-    import sys
-    if "google.colab" in sys.modules and "ListView" in str(e):
-        print("\033[91mIt looks like you're running on Google Colab. Please restart the session to resolve this issue.\033[0m")
-        print("\033[91mFor further details, visit: https://github.com/milvus-io/milvus-model/issues/32.\033[0m")
-    raise
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -37,6 +26,20 @@ class BGEM3EmbeddingFunction(BaseEmbeddingFunction):
         return_colbert_vecs: bool = False,
         **kwargs,
     ):
+        import_datasets()
+        import_FlagEmbedding()
+
+        try:
+            from FlagEmbedding import BGEM3FlagModel
+        except AttributeError as e:
+            import sys
+            if "google.colab" in sys.modules and "ListView" in str(e):
+                print(
+                    "\033[91mIt looks like you're running on Google Colab. Please restart the session to resolve this issue.\033[0m")
+                print(
+                    "\033[91mFor further details, visit: https://github.com/milvus-io/milvus-model/issues/32.\033[0m")
+            raise
+
         self.model_name = model_name
         self.batch_size = batch_size
         self.normalize_embeddings = normalize_embeddings

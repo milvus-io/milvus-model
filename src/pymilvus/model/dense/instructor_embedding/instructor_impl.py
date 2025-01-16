@@ -26,6 +26,12 @@ import os
 from collections import OrderedDict
 from typing import Union
 
+from pymilvus.model.utils import import_sentence_transformers, import_huggingface_hub, import_torch
+
+import_sentence_transformers()
+import_huggingface_hub()
+import_torch()
+
 import numpy as np
 import torch
 from sentence_transformers import SentenceTransformer

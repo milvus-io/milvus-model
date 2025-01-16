@@ -1,18 +1,8 @@
 from typing import Any, List, Optional, Union
 
-import torch
-
 from pymilvus.model.base import BaseRerankFunction, RerankResult
 from pymilvus.model.utils import import_FlagEmbedding, import_transformers
 
-import_FlagEmbedding()
-import_transformers()
-from FlagEmbedding import FlagAutoReranker
-from transformers import (
-    AutoModelForSequenceClassification,
-    AutoTokenizer,
-    is_torch_npu_available,
-)
 
 class BGERerankFunction(BaseRerankFunction):
     def __init__(
@@ -26,6 +16,9 @@ class BGERerankFunction(BaseRerankFunction):
         max_length: int = 512,
         **kwargs: Any,
     ):
+        import_FlagEmbedding()
+        import_transformers()
+        from FlagEmbedding import FlagAutoReranker
 
         self.model_name = model_name
         self.batch_size = batch_size
@@ -33,7 +26,7 @@ class BGERerankFunction(BaseRerankFunction):
         self.device = device
 
         if "devices" in kwargs:
-            device = devices
+            device = kwargs["devices"]
             kwargs.pop("devices")
 
         _model_config = dict(

@@ -2,12 +2,7 @@ from typing import List, Optional
 import numpy as np
 
 from pymilvus.model.base import BaseEmbeddingFunction
-from pymilvus.model.utils import import_sentence_transformers, import_huggingface_hub
 
-import_sentence_transformers()
-import_huggingface_hub()
-
-from .instructor_embedding.instructor_impl import Instructor
 
 class InstructorEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
@@ -20,6 +15,8 @@ class InstructorEmbeddingFunction(BaseEmbeddingFunction):
         normalize_embeddings: bool = True,
         **kwargs,
     ):
+        from .instructor_embedding.instructor_impl import Instructor
+
         self.model_name = model_name
         self.query_instruction = query_instruction
         self.doc_instruction = doc_instruction

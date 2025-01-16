@@ -6,8 +6,7 @@ from collections import defaultdict
 from pymilvus.model.base import BaseEmbeddingFunction
 from pymilvus.model.utils import import_mistralai
 
-import_mistralai()
-from mistralai import Mistral
+
 
 class MistralAIEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
@@ -16,6 +15,9 @@ class MistralAIEmbeddingFunction(BaseEmbeddingFunction):
         model_name: str = "mistral-embed",
         **kwargs,
     ):
+        import_mistralai()
+        from mistralai import Mistral
+
         self._mistral_model_meta_info = defaultdict(dict)
         self._mistral_model_meta_info[model_name]["dim"] = 1024  # fixed dimension
 

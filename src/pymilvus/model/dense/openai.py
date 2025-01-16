@@ -6,8 +6,6 @@ import numpy as np
 from pymilvus.model.base import BaseEmbeddingFunction
 from pymilvus.model.utils import import_openai
 
-import_openai()
-from openai import OpenAI
 
 class OpenAIEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
@@ -18,6 +16,9 @@ class OpenAIEmbeddingFunction(BaseEmbeddingFunction):
         dimensions: Optional[int] = None,
         **kwargs,
     ):
+        import_openai()
+        from openai import OpenAI
+
         self._openai_model_meta_info = defaultdict(dict)
         self._openai_model_meta_info["text-embedding-3-small"]["dim"] = 1536
         self._openai_model_meta_info["text-embedding-3-large"]["dim"] = 3072

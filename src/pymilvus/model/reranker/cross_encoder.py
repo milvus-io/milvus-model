@@ -3,8 +3,6 @@ from typing import Any, List
 from pymilvus.model.base import BaseRerankFunction, RerankResult
 from pymilvus.model.utils import import_sentence_transformers
 
-import_sentence_transformers()
-import sentence_transformers
 
 class CrossEncoderRerankFunction(BaseRerankFunction):
     def __init__(
@@ -15,6 +13,9 @@ class CrossEncoderRerankFunction(BaseRerankFunction):
         activation_fct: Any = None,
         **kwargs,
     ):
+        import_sentence_transformers()
+        import sentence_transformers
+
         if sentence_transformers is None:
             error_message = "sentence_transformer is not installed."
             raise ImportError(error_message)

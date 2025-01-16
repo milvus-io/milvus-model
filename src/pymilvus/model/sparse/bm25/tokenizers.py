@@ -6,12 +6,6 @@ from pathlib import Path
 from typing import Any, Dict, List, Match, Optional, Type
 from pymilvus.model.utils import import_nltk, import_jieba, import_mecab, import_konlpy, import_unidic_lite
 
-import_nltk()
-import nltk
-import yaml
-from nltk import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem.snowball import SnowballStemmer
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -58,11 +52,15 @@ class ReplacePreprocessor:
 @register_class("StandardTokenizer")
 class StandardTokenizer:
     def __init__(self):
+        import_nltk()
+        import nltk
+        from nltk import word_tokenize
         try:
            word_tokenize("this is a simple test.") 
         except LookupError:
             nltk.download("punkt_tab")
     def tokenize(self, text: str):
+        from nltk import word_tokenize
         return word_tokenize(text)
 
 
@@ -81,6 +79,9 @@ class LowercaseFilter(TextFilter):
 @register_class("StopwordFilter")
 class StopwordFilter(TextFilter):
     def __init__(self, language: str = "english", stopword_list: Optional[List[str]] = None):
+        import_nltk()
+        import nltk
+        from nltk.corpus import stopwords
         try:
             nltk.corpus.stopwords.words(language)
         except LookupError:
@@ -106,6 +107,8 @@ class PunctuationFilter(TextFilter):
 @register_class("StemmingFilter")
 class StemmingFilter(TextFilter):
     def __init__(self, language: str = "english"):
+        import_nltk()
+        from nltk.stem.snowball import SnowballStemmer
         self.stemmer = SnowballStemmer(language)
 
     def apply(self, tokens: List[str]):
@@ -193,6 +196,8 @@ def build_default_analyzer(language: str = "en"):
 
 
 def build_analyzer_from_yaml(filepath: str, name: str):
+    import yaml
+
     with Path(filepath).open(encoding="utf-8") as file:
         config = yaml.safe_load(file)
 

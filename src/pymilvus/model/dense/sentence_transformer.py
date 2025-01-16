@@ -5,8 +5,6 @@ import numpy as np
 from pymilvus.model.base import BaseEmbeddingFunction
 from pymilvus.model.utils import import_sentence_transformers
 
-import_sentence_transformers()
-from sentence_transformers import SentenceTransformer
 
 class SentenceTransformerEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
@@ -19,6 +17,8 @@ class SentenceTransformerEmbeddingFunction(BaseEmbeddingFunction):
         normalize_embeddings: bool = True,
         **kwargs,
     ):
+        import_sentence_transformers()
+        from sentence_transformers import SentenceTransformer
         self.model_name = model_name
         self.query_instruction = query_instruction
         self.doc_instruction = doc_instruction

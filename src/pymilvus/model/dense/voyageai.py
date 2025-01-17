@@ -95,4 +95,4 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
                 results = [np.unpackbits(np.array(result, dtype=np.uint8)).astype(bool) for result in embeddings]
             elif self.embedding_type == "float":
                 results = [np.array(result, dtype=np.float32) for result in embeddings]
-            return results
+        return results

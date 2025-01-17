@@ -2,11 +2,10 @@ from collections import defaultdict
 from typing import List, Optional
 
 import numpy as np
+import struct
 
-from milvus_model.base import BaseEmbeddingFunction
-from milvus_model.utils import import_voyageai
-
-import_voyageai()
+from pymilvus.model.base import BaseEmbeddingFunction
+from pymilvus.model.utils import import_voyageai
 
 
 class VoyageEmbeddingFunction(BaseEmbeddingFunction):
@@ -17,6 +16,9 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
                  truncate: Optional[bool] = None,
                  dimension: Optional[int] = None,
                  **kwargs):
+        import_voyageai()
+        import voyageai
+
         self.model_name = model_name
         self.truncate = truncate
         self._voyageai_model_meta_info = defaultdict(dict)
@@ -93,4 +95,4 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
                 results = [np.unpackbits(np.array(result, dtype=np.uint8)).astype(bool) for result in embeddings]
             elif self.embedding_type == "float":
                 results = [np.array(result, dtype=np.float32) for result in embeddings]
-        return results
+            return results

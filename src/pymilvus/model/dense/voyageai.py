@@ -83,16 +83,18 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
             output_dtype=self.embedding_type,
             output_dimension=self.dim,
         ).embeddings
-        if self.embedding_type is None:
+
+        if self.embedding_type is None or self.embedding_type == "float":
             results = [np.array(data, dtype=np.float32) for data in embeddings]
+        elif self.embedding_type == "binary":
+            results = [
+                np.unpackbits((np.array(result, dtype=np.int16) + 128).astype(np.uint8)).astype(bool)
+                for result in embeddings
+            ]
+        elif self.embedding_type == "ubinary":
+            results = [np.unpackbits(np.array(result, dtype=np.uint8)).astype(bool) for result in embeddings]
         else:
-            if self.embedding_type == "binary":
-                results = [
-                    np.unpackbits((np.array(result, dtype=np.int16) + 128).astype(np.uint8)).astype(bool)
-                    for result in embeddings
-                ]
-            elif self.embedding_type == "ubinary":
-                results = [np.unpackbits(np.array(result, dtype=np.uint8)).astype(bool) for result in embeddings]
-            elif self.embedding_type == "float":
-                results = [np.array(result, dtype=np.float32) for result in embeddings]
+            raise ValueError(f"The provided embedding_type ({self.embedding_type}) is not supported by the selected model "
+                             f"({self.model_name}). Leave this parameter empty for the default embedding_type (float). "
+                             f"Please check the supported embedding_type values here: https://docs.voyageai.com/docs/embeddings")
         return results

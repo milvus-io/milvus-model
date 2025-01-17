@@ -2,10 +2,11 @@ from collections import defaultdict
 from typing import List, Optional
 
 import numpy as np
-import struct
 
-from pymilvus.model.base import BaseEmbeddingFunction
-from pymilvus.model.utils import import_voyageai
+from milvus_model.base import BaseEmbeddingFunction
+from milvus_model.utils import import_voyageai
+
+import_voyageai()
 
 
 class VoyageEmbeddingFunction(BaseEmbeddingFunction):
@@ -16,9 +17,6 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
                  truncate: Optional[bool] = None,
                  dimension: Optional[int] = None,
                  **kwargs):
-        import_voyageai()
-        import voyageai
-
         self.model_name = model_name
         self.truncate = truncate
         self._voyageai_model_meta_info = defaultdict(dict)
@@ -87,9 +85,12 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
             results = [np.array(data, dtype=np.float32) for data in embeddings]
         else:
             if self.embedding_type == "binary":
-                results = [struct.pack('b' * len(int8_vector), *int8_vector) for int8_vector in embeddings]
+                results = [
+                    np.unpackbits((np.array(result, dtype=np.int16) + 128).astype(np.uint8)).astype(bool)
+                    for result in embeddings
+                ]
             elif self.embedding_type == "ubinary":
-                results = [struct.pack('B' * len(uint8_vector), *uint8_vector) for uint8_vector in embeddings]
+                results = [np.unpackbits(np.array(result, dtype=np.uint8)).astype(bool) for result in embeddings]
             elif self.embedding_type == "float":
                 results = [np.array(result, dtype=np.float32) for result in embeddings]
         return results

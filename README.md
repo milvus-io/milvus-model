@@ -1,18 +1,24 @@
 # Milvus Model Lib
 
-The milvus-model library provides model components for PyMilvus, the official Python SDK for Milvus, an open-source vector database built for AI applications.
+The `milvus-model` library provides the integration with common embedding and reranker models for Milvus, a high performance open-source vector database built for AI applications.  `milvus-model` lib is included as a dependency in `pymilvus`, the Python SDK of Milvus.
+
+`milvus-model` supports embedding and reranker models from service providers like OpenAI, Voyage AI, Cohere, and open-source models through SentenceTransformers.
+
+`milvus-model` supports Python 3.8 and above.
 
 ## Installation
 
-`milvus-model` supports Python 3.8 and above. Install it via pip:
-```bash
-pip install milvus-model
-```
-This command installs milvus-model directly. If you're working within the PyMilvus ecosystem and want to include milvus-model as an optional component, you can install it using:
+If you use `pymilvus`, you can install `milvus-model` through its alias `pymilvus[model]`:
 ```bash
 pip install pymilvus[model] 
 # or pip install "pymilvus[model]" for zsh.
 ```
+
+You can also install it directly:
+```bash
+pip install milvus-model
+```
+
 To upgrade milvus-model to the latest version, use:
 ```
 pip install milvus-model --upgrade

@@ -23,6 +23,6 @@ class TEIRerankFunction(BaseRerankFunction):
             raise RuntimeError(resp["error"])
 
         results = []
-        for res in resp:
+        for res in resp[:5]:
             results.append(RerankResult(text=res["text"], score=res["score"], index=res["index"]))
         return results

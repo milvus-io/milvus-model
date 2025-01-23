@@ -6,7 +6,7 @@ import requests
 from pymilvus.model.base import BaseEmbeddingFunction
 
 
-class OpenSourceEmbeddingFunction(BaseEmbeddingFunction):
+class TEIEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(
         self,
         api_url: str,
@@ -19,6 +19,8 @@ class OpenSourceEmbeddingFunction(BaseEmbeddingFunction):
     @property
     def dim(self):
         if self._dim is None:
+            # This works by sending a dummy message to the API to retrieve the vector dimension,
+            # as the original API does not directly provide this information
             self._dim = self._call_api(["get dim"])[0].shape[0]
         return self._dim
 

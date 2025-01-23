@@ -5,7 +5,7 @@ import requests
 from pymilvus.model.base import BaseRerankFunction, RerankResult
 
 
-class OpenSourceRerankFunction(BaseRerankFunction):
+class TEIRerankFunction(BaseRerankFunction):
     def __init__(self, api_url: str):
         self.api_url = api_url + "/rerank"
         self._session = requests.Session()
@@ -15,10 +15,8 @@ class OpenSourceRerankFunction(BaseRerankFunction):
             self.api_url,
             json={
                 "query": query,
-                "raw_scores": False,
                 "return_text": True,
                 "texts": documents,
-                "truncate": False,
             },
         ).json()
         if "error" in resp:

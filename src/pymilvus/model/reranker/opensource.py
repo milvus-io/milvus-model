@@ -5,7 +5,7 @@ import requests
 from pymilvus.model.base import BaseRerankFunction, RerankResult
 
 
-class OpenSourceFunction(BaseRerankFunction):
+class OpenSourceRerankFunction(BaseRerankFunction):
     def __init__(self, api_url: str):
         self.api_url = api_url + "/rerank"
         self._session = requests.Session()

@@ -2,7 +2,7 @@
 
 The `milvus-model` library provides the integration with common embedding and reranker models for Milvus, a high performance open-source vector database built for AI applications.  `milvus-model` lib is included as a dependency in `pymilvus`, the Python SDK of Milvus.
 
-`milvus-model` supports embedding and reranker models from service providers like OpenAI, Voyage AI, Cohere, and open-source models through SentenceTransformers or [text-embeddings-inference](https://github.com/huggingface/text-embeddings-inference) .
+`milvus-model` supports embedding and reranker models from service providers like OpenAI, Voyage AI, Cohere, and open-source models through SentenceTransformers or Hugging Face [Text Embeddings Inference (TEI)](https://github.com/huggingface/text-embeddings-inference) .
 
 `milvus-model` supports Python 3.8 and above.
 

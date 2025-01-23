@@ -12,7 +12,7 @@ class OpenSourceEmbeddingFunction(BaseEmbeddingFunction):
         api_url: str,
         dimensions: Optional[int] = None,
     ):
-        self.api_url = api_url
+        self.api_url = api_url + "/v1/embeddings"
         self._session = requests.Session()
         self._dim = dimensions
 

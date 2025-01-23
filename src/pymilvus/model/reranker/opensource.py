@@ -7,7 +7,7 @@ from pymilvus.model.base import BaseRerankFunction, RerankResult
 
 class OpenSourceFunction(BaseRerankFunction):
     def __init__(self, api_url: str):
-        self.api_url = api_url
+        self.api_url = api_url + "/rerank"
         self._session = requests.Session()
 
     def __call__(self, query: str, documents: List[str], top_k: int = 5) -> List[RerankResult]:

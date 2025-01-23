@@ -5,6 +5,7 @@ to use the attribute for the versions
 it works only if the backend-path of the build-system section
 from pyproject.toml is respected
 """
+
 from __future__ import annotations
 
 import logging
@@ -48,16 +49,16 @@ def parse(root: str, config: Configuration) -> ScmVersion | None:
             if parsed is not None:
                 return parsed
 
+
 fmt = "{guessed}.rc{distance}"
+
 
 def custom_version(version: ScmVersion) -> str:
     if version.exact:
         return version.format_with("{tag}")
     if version.branch is not None:
         # Does the branch name (stripped of namespace) parse as a version?
-        branch_ver_data = _parse_version_tag(
-            version.branch.split("/")[-1], version.config
-        )
+        branch_ver_data = _parse_version_tag(version.branch.split("/")[-1], version.config)
         if branch_ver_data is not None:
             branch_ver = branch_ver_data["version"]
             if branch_ver[0] == "v":
@@ -72,7 +73,7 @@ def custom_version(version: ScmVersion) -> str:
                 # We're in a release/maintenance branch, next is a patch/rc/beta bump:
                 return version.format_next_version(guess_next_version, fmt=fmt)
     # We're in a development branch, next is a minor bump:
-    #return version.format_next_version(guess_next_simple_semver, retain=SEMVER_MINOR, fmt=fmt)
+    # return version.format_next_version(guess_next_simple_semver, retain=SEMVER_MINOR, fmt=fmt)
     return version.format_next_version(guess_next_version, fmt=fmt)
 
 
@@ -87,10 +88,10 @@ def scm_version() -> str:
 
 version: str
 
+
 def __getattr__(name: str) -> str:
     if name == "version":
         global version
         version = scm_version()
         return version
     raise AttributeError(name)
-

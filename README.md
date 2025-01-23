@@ -16,12 +16,12 @@ pip install pymilvus[model]
 
 You can also install it directly:
 ```bash
-pip install milvus-model
+pip install pymilvus.model
 ```
 
 To upgrade milvus-model to the latest version, use:
 ```
-pip install milvus-model --upgrade
+pip install pymilvus.model --upgrade
 ```
 If milvus-model was initially installed as part of the PyMilvus optional components, you should also upgrade PyMilvus to ensure compatibility. This can be done with:
 ```
@@ -29,9 +29,9 @@ pip install pymilvus[model] --upgrade
 ```
 If you need to install a specific version of milvus-model, specify the version number:
 ```bash
-pip install milvus-model==0.2.0
+pip install pymilvus.model==0.3.0
 ```
-This command installs version 0.2.0 of milvus-model.
+This command installs version 0.3.0 of milvus-model.
 
 
 

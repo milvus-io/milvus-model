@@ -2,6 +2,7 @@ from pymilvus.model.dense.openai import OpenAIEmbeddingFunction
 from pymilvus.model.dense.sentence_transformer import SentenceTransformerEmbeddingFunction
 from pymilvus.model.dense.voyageai import VoyageEmbeddingFunction
 from pymilvus.model.dense.jinaai import JinaEmbeddingFunction
+from pymilvus.model.dense.tei import TEIEmbeddingFunction
 from pymilvus.model.dense.onnx import OnnxEmbeddingFunction
 from pymilvus.model.dense.cohere import CohereEmbeddingFunction
 from pymilvus.model.dense.mistralai import MistralAIEmbeddingFunction
@@ -13,9 +14,10 @@ __all__ = [
     "SentenceTransformerEmbeddingFunction",
     "VoyageEmbeddingFunction",
     "JinaEmbeddingFunction",
+    "TEIEmbeddingFunction",
     "OnnxEmbeddingFunction",
     "CohereEmbeddingFunction",
     "MistralAIEmbeddingFunction",
     "NomicEmbeddingFunction",
-    "InstructorEmbeddingFunction"
+    "InstructorEmbeddingFunction",
 ]

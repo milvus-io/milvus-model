@@ -8,6 +8,7 @@ from pymilvus.model.dense.cohere import CohereEmbeddingFunction
 from pymilvus.model.dense.mistralai import MistralAIEmbeddingFunction
 from pymilvus.model.dense.nomic import NomicEmbeddingFunction
 from pymilvus.model.dense.instructor import InstructorEmbeddingFunction
+from pymilvus.model.dense.model2vec_embed import Model2VecEmbeddingFunction
 
 __all__ = [
     "OpenAIEmbeddingFunction",
@@ -20,4 +21,5 @@ __all__ = [
     "MistralAIEmbeddingFunction",
     "NomicEmbeddingFunction",
     "InstructorEmbeddingFunction",
+    "Model2VecEmbeddingFunction",
 ]

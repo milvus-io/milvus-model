@@ -18,6 +18,7 @@ __all__ = [
     "import_nomic",
     "import_instructor",
     "import_datasets",
+    "import_model2vec",
     ]
 
 import importlib.util
@@ -82,6 +83,9 @@ def import_instructor():
 
 def import_datasets():
     _check_library("datasets", package="datasets")
+
+def import_model2vec():
+    _check_library("model2vec", package="model2vec")
 
 def _check_library(libname: str, prompt: bool = True, package: Optional[str] = None):
     is_avail = False

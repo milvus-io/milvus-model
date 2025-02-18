@@ -56,4 +56,4 @@ class Model2VecEmbeddingFunction(BaseEmbeddingFunction):
 
     def _encode(self, texts: List[str]) -> List[np.array]:
         embeddings = self.model.encode(texts)
-        return [embeddings[i] for i in range(embeddings.shape[0])]=
+        return [embeddings[i] for i in range(embeddings.shape[0])]

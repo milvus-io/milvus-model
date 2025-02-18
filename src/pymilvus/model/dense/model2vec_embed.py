@@ -1,25 +1,27 @@
 import numpy as np
-from typing import List, Optional, Union
+from typing import List, Union
 from pathlib import Path
 from pymilvus.model.base import BaseEmbeddingFunction
+from pymilvus.model.utils import import_model2vec
 
 
 class Model2VecEmbeddingFunction(BaseEmbeddingFunction):
     def __init__(self, model_source: Union[str, Path] = "minishlab/potion-base-8M", **kwargs):
         """
-            Initialize the Model2VecEmbeddingFunction, which loads a Model2Vec model either from the Hugging Face Hub or from a local directory.
-            Defaults to use the "minishlab/potion-base-8M" model and load from Hugging Face.
+        Initialize the Model2VecEmbeddingFunction, which loads a Model2Vec model either from the Hugging Face Hub or from a local directory.
+        Defaults to use the "minishlab/potion-base-8M" model and load from Hugging Face.
 
-            Parameters:
-                model_source (Union[str, Path]):
-                    - If a string is provided and it does not correspond to an existing local directory,
-                      it is interpreted as a Hugging Face model identifier (e.g., "minishlab/potion-base-8M").
-                    - If the provided string (or Path) corresponds to an existing directory, the model is loaded locally.
-                **kwargs:
-                    - Additional keyword arguments that will be passed to the StaticModel.from_pretrained method
-                      when loading a remote model from the Hugging Face Hub, including parameters such as
-                      huggingface authentication tokens.
+        Parameters:
+            model_source (Union[str, Path]):
+                - If a string is provided and it does not correspond to an existing local directory,
+                  it is interpreted as a Hugging Face model identifier (e.g., "minishlab/potion-base-8M").
+                - If the provided string (or Path) corresponds to an existing directory, the model is loaded locally.
+            **kwargs:
+                - Additional keyword arguments that will be passed to the StaticModel.from_pretrained method
+                  when loading a remote model from the Hugging Face Hub, including parameters such as
+                  huggingface authentication tokens.
         """
+        import_model2vec()
         from model2vec import StaticModel
 
         self.model_source = model_source
@@ -54,4 +56,4 @@ class Model2VecEmbeddingFunction(BaseEmbeddingFunction):
 
     def _encode(self, texts: List[str]) -> List[np.array]:
         embeddings = self.model.encode(texts)
-        return [embeddings[i] for i in range(embeddings.shape[0])]
+        return [embeddings[i] for i in range(embeddings.shape[0])]=

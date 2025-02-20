@@ -4,7 +4,7 @@ import string
 from importlib.util import find_spec
 from pathlib import Path
 from typing import Any, Dict, List, Match, Optional, Type
-from pymilvus.model.utils import import_nltk, import_jieba, import_mecab, import_konlpy, import_unidic_lite
+from pymilvus.model.utils import import_nltk, import_jieba, import_mecab, import_konlpy, import_unidic_lite, import_kiwi
 
 
 logger = logging.getLogger(__name__)
@@ -167,6 +167,21 @@ class KonlpyTokenizer(Tokenizer):
 
         return Kkma().nouns(text)
 
+
+@register_class("KiwiTokenizer")
+class KiwiTokenizer(Tokenizer):
+    def __init__(self):
+        import_kiwi()
+        if find_spec("kiwipiepy") is None:
+            error_message = "kiwipiepy is required for KiwiTokenizer but is not installed. Please install it using 'pip install kiwipiepy'."
+            logger.error(error_message)
+            raise ImportError(error_message)
+
+    def tokenize(self, text: str):
+        from kiwipiepy import Kiwi
+        
+        return [t.form for t in Kiwi().tokenize(text, normalize_coda=True)]
+    
 
 class Analyzer:
     def __init__(

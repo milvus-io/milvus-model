@@ -6,6 +6,7 @@ __all__ = [
     "import_transformers",
     "import_jieba",
     "import_konlpy",
+    "import_kiwi",
     "import_mecab",
     "import_scipy",
     "import_protobuf",
@@ -47,6 +48,9 @@ def import_jieba():
 
 def import_konlpy():
     _check_library("konlpy", package="konlpy")
+
+def import_kiwi():
+    _check_library("kiwipiepy", package="kiwipiepy")
 
 def import_mecab():
     _check_library("konlpy", package="mecab-python3")

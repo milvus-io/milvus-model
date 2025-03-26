@@ -20,12 +20,16 @@ __all__ = [
     "import_instructor",
     "import_datasets",
     "import_model2vec",
+    "import_google",
     ]
 
 import importlib.util
 from typing import Optional
 
 from pymilvus.model.utils.dependency_control import prompt_install
+
+def import_google():
+    _check_library("google-genai", package="google-genai>=1.7.0")
 
 def import_openai():
     _check_library("openai", package="openai>=1.12.0")

@@ -22,6 +22,8 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
         self.model_name = model_name
         self.truncate = truncate
         self._voyageai_model_meta_info = defaultdict(dict)
+        self._voyageai_model_meta_info["voyage-3.5"]["dim"] = [1024, 256, 512, 2048]
+        self._voyageai_model_meta_info["voyage-3.5-lite"]["dim"] = [1024, 256, 512, 2048]
         self._voyageai_model_meta_info["voyage-3-large"]["dim"] = [1024, 256, 512, 2048]
         self._voyageai_model_meta_info["voyage-code-3"]["dim"] = [1024, 256, 512, 2048]
         self._voyageai_model_meta_info["voyage-3"]["dim"] = [1024]
@@ -44,7 +46,7 @@ class VoyageEmbeddingFunction(BaseEmbeddingFunction):
         if embedding_type == "int8" or embedding_type == "uint8":
             raise ValueError("Currently int8 or uint8 is not supported with PyMilvus model library.")
 
-        if self.model_name in ['voyage-3-large', 'voyage-code-3']:
+        if self.model_name in ['voyage-3-large', 'voyage-code-3', 'voyage-3.5', 'voyage-3.5-lite']:
             if embedding_type is not None and embedding_type not in ['float', 'binary', 'ubinary']:
                 raise ValueError(f"The provided embedding_type ({embedding_type}) is not supported by the selected model "
                                  f"({self.model_name}). Leave this parameter empty for the default embedding_type (float). "

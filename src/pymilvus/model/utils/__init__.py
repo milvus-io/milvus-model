@@ -6,6 +6,7 @@ __all__ = [
     "import_transformers",
     "import_jieba",
     "import_konlpy",
+    "import_kiwi",
     "import_mecab",
     "import_scipy",
     "import_protobuf",
@@ -18,12 +19,17 @@ __all__ = [
     "import_nomic",
     "import_instructor",
     "import_datasets",
+    "import_model2vec",
+    "import_google",
     ]
 
 import importlib.util
 from typing import Optional
 
 from pymilvus.model.utils.dependency_control import prompt_install
+
+def import_google():
+    _check_library("google-genai", package="google-genai>=1.7.0")
 
 def import_openai():
     _check_library("openai", package="openai>=1.12.0")
@@ -46,6 +52,9 @@ def import_jieba():
 
 def import_konlpy():
     _check_library("konlpy", package="konlpy")
+
+def import_kiwi():
+    _check_library("kiwipiepy", package="kiwipiepy")
 
 def import_mecab():
     _check_library("konlpy", package="mecab-python3")
@@ -82,6 +91,9 @@ def import_instructor():
 
 def import_datasets():
     _check_library("datasets", package="datasets")
+
+def import_model2vec():
+    _check_library("model2vec", package="model2vec")
 
 def _check_library(libname: str, prompt: bool = True, package: Optional[str] = None):
     is_avail = False

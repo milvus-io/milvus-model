@@ -1,14 +1,13 @@
 [build-system]
 requires = [
-  "setuptools >= 67",
+  "setuptools >= 75",
   "wheel",
   "gitpython",
-  "setuptools_scm[toml] >= 6.2",
+  "setuptools_scm >= 8.0",
 ]
 build-backend = "setuptools.build_meta"
-
 [project]
-name = "milvus-model"
+name = "pymilvus.model"
 authors = [
   {name = "Milvus Team", email = "milvus-team@zilliz.com"},
 ]
@@ -30,14 +29,18 @@ classifiers = [
 
 dynamic = ["version"]
 
+[project.urls]
+repository = "https://github.com/milvus-io/milvus-model"  # Update the repository URL
+
 [tool.setuptools]
-package-dir = { "" = "src/" }
+package-dir = { "pymilvus" = "pymilvus" }
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src", "_version_helper.py"]
 
 [tool.setuptools.package-data]
 "pymilvus.model.sparse.bm25" = ["lang.yaml"]
-
-[project.urls]
-repository = "https://github.com/milvus-io/milvus-model"  # Update the repository URL
 
 [tool.setuptools.dynamic]
 version = { attr = "_version_helper.version" }
@@ -51,6 +54,7 @@ include = '\.pyi?$'
 extend-ignore = ["E203", "E501"]
 
 [tool.ruff]
+src = ["src"]
 lint.select = [
     "E",
     "F",

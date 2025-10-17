@@ -19,7 +19,8 @@ dependencies = [
     "onnxruntime",
     "scipy >= 1.10.0",
     "protobuf",
-    "numpy"
+    "numpy",
+    "requests"
 ]
 
 classifiers = [

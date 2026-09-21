@@ -36,7 +36,13 @@ class OnnxEmbeddingFunction(BaseEmbeddingFunction):
         return [self._to_embedding(text) for text in texts]
 
     def _to_embedding(self, data: str, **_):
-        encoded_text = self.tokenizer.encode_plus(data, padding="max_length", truncation=True)
+        encoded_text = self.tokenizer(
+            data,
+            padding="max_length",
+            truncation=True,
+            # The ONNX model requires token_type_ids, even when the tokenizer omits them by default.
+            return_token_type_ids=True,
+        )
 
         ort_inputs = {
             "input_ids": np.array(encoded_text["input_ids"]).astype("int64").reshape(1, -1),

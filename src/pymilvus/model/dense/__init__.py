@@ -1,4 +1,5 @@
 from pymilvus.model.dense.openai import OpenAIEmbeddingFunction
+from pymilvus.model.dense.azure_openai import AzureOpenAIEmbeddingFunction
 from pymilvus.model.dense.sentence_transformer import SentenceTransformerEmbeddingFunction
 from pymilvus.model.dense.voyageai import VoyageEmbeddingFunction
 from pymilvus.model.dense.jinaai import JinaEmbeddingFunction
@@ -13,6 +14,7 @@ from pymilvus.model.dense.gemini import GeminiEmbeddingFunction
 
 __all__ = [
     "OpenAIEmbeddingFunction",
+    "AzureOpenAIEmbeddingFunction",
     "SentenceTransformerEmbeddingFunction",
     "VoyageEmbeddingFunction",
     "JinaEmbeddingFunction",

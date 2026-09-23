@@ -4,7 +4,8 @@ import sys
 import unittest
 from unittest import mock
 
-# 直接加载 jev.py 源码，绕过 pymilvus.model 包的 __init__（它会触发 onnxruntime 等重依赖导入）
+# Load jev.py directly, bypassing the pymilvus.model package __init__
+# (which imports heavy deps like onnxruntime).
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _JEV_PATH = os.path.join(_HERE, "..", "src", "pymilvus", "model", "reranker", "jev.py")
 
@@ -12,7 +13,7 @@ _JEV_PATH = os.path.join(_HERE, "..", "src", "pymilvus", "model", "reranker", "j
 def _load_jev_module():
     spec = importlib.util.spec_from_file_location("jev_module_under_test", _JEV_PATH)
     module = importlib.util.module_from_spec(spec)
-    # 用假的 base 模块替代真实 base（避免 import pymilvus.model.base 拉起重依赖）
+    # Substitute a fake base module to avoid pulling in heavy deps.
     fake_base = mock.MagicMock()
     fake_base.BaseRerankFunction = object
     fake_base.RerankResult = mock.Mock(side_effect=lambda **kw: _FakeResult(**kw))
@@ -69,14 +70,14 @@ class TestJevRerankFunction(unittest.TestCase):
         with mock.patch.object(fn._session, "post", return_value=mock_resp) as post_mock:
             results = fn(self.query, self.documents, top_k=3)
 
-        # 断言请求体结构正确
+        # Assert the request payload shape is correct.
         payload = post_mock.call_args[1]["json"]
         self.assertEqual(payload["model"], "jev-latest")
         self.assertIn("0-dimensional biomaterials", payload["state"])
         self.assertEqual(set(payload["questions"].keys()), {"d0", "d1", "d2"})
         self.assertEqual(payload["questions"]["d0"]["type"], "noul")
 
-        # 断言按 noul 降序：d0(0.96) > d2(0.30) > d1(0.06)
+        # Assert descending order by noul: d0(0.96) > d2(0.30) > d1(0.06)
         self.assertEqual(len(results), 3)
         self.assertEqual(results[0].index, 0)
         self.assertEqual(results[0].score, 0.96)

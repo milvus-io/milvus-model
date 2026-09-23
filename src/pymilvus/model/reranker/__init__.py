@@ -3,6 +3,7 @@ from pymilvus.model.reranker.bgereranker import BGERerankFunction
 from pymilvus.model.reranker.voyageai import VoyageRerankFunction
 from pymilvus.model.reranker.cross_encoder import CrossEncoderRerankFunction
 from pymilvus.model.reranker.jinaai import JinaRerankFunction
+from pymilvus.model.reranker.jev import JevRerankFunction
 from pymilvus.model.reranker.tei import TEIRerankFunction
 
 __all__ = [
@@ -11,5 +12,6 @@ __all__ = [
     "VoyageRerankFunction",
     "CrossEncoderRerankFunction",
     "JinaRerankFunction",
+    "JevRerankFunction",
     "TEIRerankFunction",
 ]
